@@ -15,8 +15,8 @@ daemon:
   callback: ~
   callback_log_lines: 10
   groups:
-    default: 1
     ansible: 2
+    default: 1
     sleep: 5
 shared:
   pueue_directory: /root/.local/share/pueue

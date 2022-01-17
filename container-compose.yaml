@@ -3,9 +3,9 @@ version: '3.4'
 
 services:
   scheduler0:
+    tty: yes
     container_name: scheduler0
     hostname: scheduler0
-    tty: no
     dns:
       - 8.8.8.8
       - 1.1.1.1
@@ -14,8 +14,14 @@ services:
     build: 
       dockerfile: fedora.Dockerfile
       context: .
-    ports: ["39775:39775"]
-    entrypoint: /bin/bash
+    ports: 
+      - "8000:8000"
+    volumes:
+      - ./files/webhook_server.yml:/root/.config/webhook_server.yml
+      - ./files/pueue.yml:/root/.config/pueue/pueue.yml
+
+#    command: /pueued.sh
+    #-xec "pueued -d -c /root/.config/pueue/pueue.yml && sleep 2 && webhookserver"
     environment:
      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     restart: unless-stopped

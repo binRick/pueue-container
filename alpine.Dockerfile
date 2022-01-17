@@ -81,4 +81,4 @@ COPY files/pueue.yml /root/.config/pueue/pueue.yml
 COPY files/webhook_server.yml /root/.config/webhook_server.yml
 RUN chmod 600 /root/.config/pueue/pueue.yml /root/.config/webhook_server.yml
 
-
+EXPOSE 8000
