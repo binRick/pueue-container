@@ -32,6 +32,7 @@ FROM alpine-base-pkgs as alpine-builder
 #RUN dnf -y install sssd-client restic
 RUN apk list > /.apk
 RUN apk del cargo rust
+RUN apk add libgcc
 
 
 ADD https://sh.rustup.rs /rust.sh
