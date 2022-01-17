@@ -36,16 +36,17 @@ RUN git clone https://github.com/Nukesor/pueue-webhook-server
 RUN git clone https://github.com/nukesor/pueue
 WORKDIR /usr/src/pueue
 
+RUN dnf -y install gcc make
 RUN ~/.cargo/bin/cargo install --locked pueue
 WORKDIR /usr/src/pueue-webhook-server
 RUN ~/.cargo/bin/cargo install --path . 
 
-RUN find ~/.cargo/bin
+#RUN find ~/.cargo/bin
 RUN cp ~/.cargo/bin/pueue /.
 RUN cp ~/.cargo/bin/pueued /.
 RUN cp ~/.cargo/bin/webhookserver /.
 RUN dnf -y install openssl
-RUN openssl req -nodes -new -x509 -keyout /key.pem -out /cert.pem
+#RUN openssl req -nodes -new -x509 -keyout /key.pem -out /cert.pem
 
 
 
@@ -64,14 +65,14 @@ RUN mkdir -p /root/.config/pueue
 COPY --from=builder /pueue /bin/.
 COPY --from=builder /pueued /bin/.
 COPY --from=builder /webhookserver /bin/.
-COPY --from=builder /key.pem /root/.config/pueue/key.pem
-COPY --from=builder /cert.pem /root/.config/pueue/cert.pem
+#COPY --from=builder /key.pem /root/.config/pueue/key.pem
+#COPY --from=builder /cert.pem /root/.config/pueue/cert.pem
 
 
 RUN echo 'pueued -c ~/.config/pueue/pueue.yml --verbose' > /pueued.sh
 RUN echo 'webhookserver' > /webhookserver.sh
 RUN chmod 700 /pueued.sh /webhookserver.sh
-RUN chmod 600 /root/.config/pueue/key.pem /root/.config/pueue/key.pem
+#RUN chmod 600 /root/.config/pueue/key.pem /root/.config/pueue/key.pem
 
 
 RUN dnf -y install procps-ng bash httpie iputils iproute socat zsh bind-utils wireguard-tools

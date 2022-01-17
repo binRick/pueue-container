@@ -43,16 +43,18 @@ RUN git clone https://github.com/Nukesor/pueue-webhook-server
 RUN git clone https://github.com/nukesor/pueue
 WORKDIR /usr/src/pueue
 
+RUN apk add gcc        make         gcc         g++         zlib         zlib-dev         python3         ldc  
+
 RUN ~/.cargo/bin/cargo install --locked pueue
 WORKDIR /usr/src/pueue-webhook-server
 RUN ~/.cargo/bin/cargo install --path . 
 
-RUN find ~/.cargo/bin
+#RUN find ~/.cargo/bin
 RUN cp ~/.cargo/bin/pueue /.
 RUN cp ~/.cargo/bin/pueued /.
 RUN cp ~/.cargo/bin/webhookserver /.
 RUN apk add openssl
-RUN openssl req -nodes -new -x509 -keyout /key.pem -out /cert.pem
+#RUN openssl req -nodes -new -x509 -keyout /key.pem -out /cert.pem
 
 
 
