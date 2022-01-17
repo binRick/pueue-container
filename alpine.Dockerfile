@@ -61,17 +61,18 @@ RUN apk add openssl
 FROM alpine:3.14 as alpine-pueue-container
 
 RUN mkdir -p /root/.config/pueue
-COPY --from=alpipie-builder /pueue /bin/.
+COPY --from=alpine-builder /pueue /bin/.
 COPY --from=alpine-builder /pueued /bin/.
 COPY --from=alpine-builder /webhookserver /bin/.
-COPY --from=alpine-builder /key.pem /root/.config/pueue/key.pem
-COPY --from=alpine-builder /cert.pem /root/.config/pueue/cert.pem
+#COPY --from=alpine-builder /key.pem /root/.config/pueue/key.pem
+#COPY --from=alpine-builder /cert.pem /root/.config/pueue/cert.pem
 
 
 RUN echo 'pueued -c ~/.config/pueue/pueue.yml --verbose' > /pueued.sh
 RUN echo 'webhookserver' > /webhookserver.sh
 RUN chmod 700 /pueued.sh /webhookserver.sh
-RUN chmod 600 /root/.config/pueue/key.pem /root/.config/pueue/key.pem
+
+#RUN chmod 600 /root/.config/pueue/key.pem /root/.config/pueue/key.pem
 
 
 RUN apk add httpie socat wireguard-tools zsh bash curl wget

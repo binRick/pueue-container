@@ -2,7 +2,30 @@
 version: '3.4'
 
 services:
-  scheduler0:
+  alpine-scheduler0:
+    tty: yes
+    container_name: alpine-scheduler0
+    hostname: alpine-scheduler0
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    privileged: no
+    image: alpine-pueue-container:latest
+    build: 
+      dockerfile: alpine.Dockerfile
+      context: .
+    ports: 
+      - "8001:8001"
+    volumes:
+      - ./files/webhook_server.yml:/root/.config/webhook_server.yml
+      - ./files/pueue.yml:/root/.config/pueue/pueue.yml
+
+    environment:
+     - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    restart: unless-stopped
+    init: no
+    working_dir: /root/.config/pueue
+  fedora-scheduler0:
     tty: yes
     container_name: scheduler0
     hostname: scheduler0
