@@ -10,10 +10,11 @@ services:
       - 8.8.8.8
       - 1.1.1.1
     privileged: no
+    image: pueue-container:latest
     build: 
       dockerfile: fedora.Dockerfile
       context: .
-    ports: ["9443:39775"]
+    ports: ["39775:39775"]
     entrypoint: /bin/bash
     environment:
      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
