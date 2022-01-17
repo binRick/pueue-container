@@ -1,0 +1,25 @@
+---
+version: '3.4'
+
+services:
+  scheduler0:
+    container_name: scheduler0
+    hostname: scheduler0
+    tty: no
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    privileged: no
+    build: 
+      dockerfile: fedora.Dockerfile
+      context: .
+    ports: ["9443:39775"]
+    entrypoint: /bin/bash
+    environment:
+     - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    restart: unless-stopped
+    init: no
+    working_dir: /root/.config/pueue
+
+
+
