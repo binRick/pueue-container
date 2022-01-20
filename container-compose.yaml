@@ -37,7 +37,7 @@ x-vars:
 
 services:
   webhook0:
-    tty: yes
+    tty: no
     hostname: webhook0
     image: *IMG
     build: *BUILD
@@ -48,10 +48,10 @@ services:
       - ./files/webhook_server.yml:/root/.config/webhook_server.yml
       - /tmp/pueued.sock:/root/.local/share/pueue/pueue.socket
     working_dir: /root/.config
-    command: webhookserver
+    command: /bin/webhookserver
 
   pueued0:
-    tty: yes
+    tty: no
     hostname: pueued0
     image: *IMG
     build: *BUILD
@@ -67,7 +67,7 @@ services:
 
   iodined0:
     privileged: yes
-    tty: yes
+    tty: no
     container_name: iodined0
     hostname: iodined0
     image: *IMG
@@ -79,7 +79,7 @@ services:
      - *PATH
     restart: always
     working_dir: /root/
-    command: iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net
+    command: /bin/iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net
     volumes:
       - *CG
 
