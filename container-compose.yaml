@@ -1,12 +1,30 @@
 ---
+version: '3.4'
 x-vars:
-  DNS: &DNS
+  PATH:   &PATH    PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+  CG:     &CG      /sys/fs/cgroup:/sys/fs/cgroup:ro
+  DNS:    &DNS
     - 8.8.8.8
     - 1.1.1.1
-version: '3.4'
-#         systemd:           /sys/fs/cgroup:/sys/fs/cgroup:ro
-services:
+  FEDORA: &FEDORA
+    tty: yes
+    hostname: fedora-webhook0
+    image: fedora-pueue-container:latest
+    dns: *DNS
+    build: 
+      dockerfile: fedora.Dockerfile
+      context: .
+    environment:
+     - *PATH
+    restart: unless-stopped
+    init: no
+    working_dir: /root/.config
 
+
+
+
+
+services:
   fedora-webhook0:
     tty: yes
     hostname: fedora-webhook0
@@ -64,7 +82,7 @@ services:
     ports: 
       - "9553:53"
     environment:
-     - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+     - *PATH
     restart: unless-stopped
     init: no
     working_dir: /root/.config/pueue
