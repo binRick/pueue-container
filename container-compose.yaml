@@ -6,8 +6,6 @@ x-vars:
   DNS:    &DNS
     - 8.8.8.8
     - 1.1.1.1
-  #DF: &DF fedora.Dockerfile
-  #IMG: &IMG fedora-pueue-container:latest
   DF: &DF alpine.Dockerfile
   IMG: &IMG alpine-pueue-container:latest
   BUILD: &BUILD
