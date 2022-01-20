@@ -33,22 +33,21 @@ x-vars:
     restart: always
     working_dir: /root/.config
 
-
-
-services:
-  webhook0:
+x-disabledservices:
+  scheduler0:
     tty: no
-    hostname: webhook0
+    hostname: scheduler0
     image: *IMG
     build: *BUILD
     dns: *DNS
-    ports: 
-      - "15001:8000"
     volumes:
-      - ./files/webhook_server.yml:/root/.config/webhook_server.yml
-      - /tmp/pueued.sock:/root/.local/share/pueue/pueue.socket
-    working_dir: /root/.config
-    command: /bin/webhookserver
+      - ./files/net-pueue.yml:/root/.config/pueue/pueue.yml
+    restart: always
+    working_dir: /root/.config/pueue
+    command: sh -c "while :; do date; /bin/pueue status; sleep 5; done"
+
+
+services:
 
   pueued0:
     tty: no
@@ -74,7 +73,7 @@ services:
     build: *BUILD
     dns: *DNS
     ports: 
-      - "15003:53/udp"
+      - "54:53/udp"
     environment:
      - *PATH
     restart: always
@@ -83,6 +82,19 @@ services:
     volumes:
       - *CG
 
+  webhook0:
+    tty: no
+    hostname: webhook0
+    image: *IMG
+    build: *BUILD
+    dns: *DNS
+    ports: 
+      - 35001:8000
+    volumes:
+      - ./files/webhook_server.yml:/root/.config/webhook_server.yml
+      - /tmp/pueued.sock:/root/.local/share/pueue/pueue.socket
+    working_dir: /root/.config
+    command: /bin/webhookserver
 
 
 
