@@ -1,0 +1,8 @@
+*.tar.gz
+files/*
+!files/pueue
+!files/pueued
+!files/webhookserver
+!files/pueue.yml
+!files/webhook_server.yml
+!iodine-0.7.0.tar.gz
