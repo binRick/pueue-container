@@ -8,6 +8,8 @@ RUN dnf -y install httpie socat bind-utils
 #RUN dnf -y install openssh-clients rsync restic
 RUN dnf -y install wireguard-tools 
 
+
+
 FROM base-pkgs as builder
 
 #RUN dnf -y install bash systemd
@@ -115,3 +117,34 @@ RUN chmod 0600 /etc/systemd/system/iodined.service
 
 RUN dnf -y install zsh tmux
 RUN dnf -y install net-tools
+
+
+
+
+
+
+
+
+FROM base-pkgs as binaries
+ADD https://github.com/Nukesor/pueue/releases/download/v1.0.6/pueued-linux-x86_64 /pueued
+ADD https://github.com/Nukesor/pueue/releases/download/v1.0.6/pueue-linux-x86_64 /pueue
+ADD https://github.com/Nukesor/pueue/releases/download/v1.0.6/systemd.pueued.service /etc/systemd/system/pueued.service
+
+RUN chmod 700 /pueue /pueued
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
