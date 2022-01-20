@@ -25,8 +25,8 @@ RUN mkdir -p /root/.config/pueue
 COPY --from=binaries /pueue /bin/.
 COPY --from=binaries /pueued /bin/.
 COPY --from=binaries /webhookserver /bin/.
-COPY --from=iodine-builder /iodine /bin/.
-COPY --from=iodine-builder /iodined /bin/.
+#COPY --from=iodine-builder /iodine /bin/.
+#COPY --from=iodine-builder /iodined /bin/.
 #COPY --from=builder /key.pem /root/.config/pueue/key.pem
 #COPY --from=builder /cert.pem /root/.config/pueue/cert.pem
 
