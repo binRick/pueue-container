@@ -76,7 +76,7 @@ services:
       - /tmp/pueued.sock:/root/.local/share/pueue/pueue.socket
     restart: always
     working_dir: /root/.config/pueue
-    command: pueued -c /root/.config/pueue/pueue.yml --verbose
+    command: pueued -c /root/.config/pueue/pueue.yml -vv
 
   iodined0:
     privileged: yes
