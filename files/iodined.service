@@ -1,0 +1,10 @@
+[Unit]
+Description=Iodined
+
+[Service]
+Restart=yes
+ExecStart=/bin/iodined -d dns0 -f -c -i 300 10.251.251.0/24 t2.dtun.vpntech.net"
+StandardOutput=syslog
+
+[Install]
+WantedBy=default.target

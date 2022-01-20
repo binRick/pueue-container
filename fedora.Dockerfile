@@ -49,6 +49,16 @@ RUN dnf -y install openssl
 #RUN openssl req -nodes -new -x509 -keyout /key.pem -out /cert.pem
 
 
+FROM base-pkgs as iodine-builder
+RUN dnf -y install gcc make git
+ADD iodine-0.7.0.tar.gz /
+WORKDIR /iodine-0.7.0
+RUN dnf -y install zlib-devel
+RUN make
+RUN ls /iodine-0.7.0/bin/iodine
+RUN ls /iodine-0.7.0/bin/iodined
+RUN cp /iodine-0.7.0/bin/iodine /iodine-0.7.0/bin/iodined /
+
 
 FROM base-pkgs as daemontools-builder
 RUN dnf -y install gcc make git
@@ -96,5 +106,11 @@ COPY files/pueued.service /etc/systemd/system/.
 RUN chmod 0600 /etc/systemd/system/pueued.service
 
 VOLUME ["/sys/fs/cgroup"]
-#ENTRYPOINT ["/bin/sh","-c"]
 CMD "/sbin/init"
+
+COPY --from=iodine-builder /iodine /bin/.
+COPY --from=iodine-builder /iodined /bin/.
+COPY files/iodined.service /etc/systemd/system/.
+RUN chmod 0600 /etc/systemd/system/iodined.service
+
+RUN dnf -y install zsh tmux
