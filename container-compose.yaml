@@ -35,6 +35,20 @@ x-vars:
 
 
 services:
+  binaries:
+    tty: yes
+    hostname: binaries
+    image: binaries
+    build: *BUILD
+    dns: *DNS
+    ports: 
+      - "15001:8000"
+    volumes:
+      - ./files/webhook_server.yml:/root/.config/webhook_server.yml
+      - /tmp/pueued.sock:/root/.local/share/pueue/pueue.socket
+    working_dir: /root/.config/pueue
+    command: webhookserver
+
   webhook0:
     tty: yes
     hostname: webhook0
