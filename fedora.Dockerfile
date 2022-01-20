@@ -8,7 +8,7 @@ RUN dnf -y install procps-ng iputils iproute coreutils \
 
 
 
-FROM base-pkgs as binaries
+FROM base-pkgs as fedora-binaries
 ADD https://github.com/Nukesor/webhook-server/releases/download/v0.1.4/webhookserver-linux-amd64 /webhookserver
 ADD https://github.com/Nukesor/pueue/releases/download/v1.0.6/pueue-linux-x86_64 /pueue
 ADD https://github.com/Nukesor/pueue/releases/download/v1.0.6/pueued-linux-x86_64 /pueued
@@ -30,9 +30,9 @@ RUN cp /iodine-0.7.0/bin/iodine /iodine-0.7.0/bin/iodined /
 
 FROM fedora:latest as fedora-pueue-container
 RUN mkdir -p /root/.config/pueue
-COPY --from=binaries /pueue /bin/.
-COPY --from=binaries /pueued /bin/.
-COPY --from=binaries /webhookserver /bin/.
+COPY --from=fedora-binaries /pueue /bin/.
+COPY --from=fedora-binaries /pueued /bin/.
+COPY --from=fedora-binaries /webhookserver /bin/.
 COPY --from=iodine-builder /iodine /bin/.
 COPY --from=iodine-builder /iodined /bin/.
 #COPY --from=builder /key.pem /root/.config/pueue/key.pem
