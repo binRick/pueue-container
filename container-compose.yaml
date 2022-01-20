@@ -38,7 +38,7 @@ x-vars:
 services:
   binaries:
     tty: yes
-    hostname: binaries
+    hostname: fedora-binaries
     image: *BIMG
     build: *BUILD
     dns: *DNS
