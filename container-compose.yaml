@@ -12,11 +12,9 @@ x-vars:
   IMG: &IMG alpine-pueue-container:latest
   FEDORA: &FEDORA
     tty: yes
-    hostname: fedora-webhook0
-    image: fedora-pueue-container:latest
     dns: *DNS
     build: 
-      dockerfile: fedora.Dockerfile
+      dockerfile: *IMG
       context: .
     environment:
      - *PATH
