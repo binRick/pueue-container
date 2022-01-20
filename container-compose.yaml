@@ -39,7 +39,7 @@ services:
   binaries:
     tty: yes
     hostname: fedora-binaries
-    image: *BIMG
+    image: *IMG
     build: *BUILD
     dns: *DNS
     ports: 
