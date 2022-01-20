@@ -1,4 +1,6 @@
 #!/bin/bash
 set -eou pipefail
+DISTRO=${1:-fedora}
 
-docker build -f fedora.Dockerfile -t pueue-container --target pueue-container .
+cmd="docker build -f $DISTRO.Dockerfile -t $DISTRO-pueue-container --target $DISTRO-pueue-container ."
+eval "$cmd"
