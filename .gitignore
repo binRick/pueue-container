@@ -2,3 +2,4 @@
 .envrc
 bin/docker
 .alpine-docker-compose.yaml
+bin/docker-compose
