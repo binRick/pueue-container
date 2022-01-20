@@ -57,8 +57,6 @@ RUN git clone https://github.com/binRick/daemontools-encore-rpm
 WORKDIR /daemontools-encore-rpm
 RUN sh ./build.sh 1.11
 
-
-
 FROM fedora:latest as pueue-container
 
 RUN mkdir -p /root/.config/pueue
@@ -82,4 +80,21 @@ COPY files/pueue.yml /root/.config/pueue/pueue.yml
 COPY files/webhook_server.yml /root/.config/webhook_server.yml
 RUN chmod 600 /root/.config/pueue/pueue.yml /root/.config/webhook_server.yml
 
+ENV container=docker
 
+RUN dnf -y install systemd && dnf clean all && \
+  (cd /lib/systemd/system/sysinit.target.wants/ ; for i in * ; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i ; done) ; \
+  rm -f /lib/systemd/system/multi-user.target.wants/* ;\
+  rm -f /etc/systemd/system/*.wants/* ;\
+  rm -f /lib/systemd/system/local-fs.target.wants/* ; \
+  rm -f /lib/systemd/system/sockets.target.wants/*udev* ; \
+  rm -f /lib/systemd/system/sockets.target.wants/*initctl* ; \
+  rm -f /lib/systemd/system/basic.target.wants/* ;\
+  rm -f /lib/systemd/system/anaconda.target.wants/*
+
+COPY files/pueued.service /etc/systemd/system/.
+RUN chmod 0600 /etc/systemd/system/pueued.service
+
+VOLUME ["/sys/fs/cgroup"]
+#ENTRYPOINT ["/bin/sh","-c"]
+CMD "/sbin/init"
