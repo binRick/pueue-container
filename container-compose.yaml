@@ -6,6 +6,10 @@ x-vars:
   DNS:    &DNS
     - 8.8.8.8
     - 1.1.1.1
+  DF: &_DF fedora.Dockerfile
+  IMG: &_IMG fedora-pueue-container:latest
+  DF: &DF alpine.Dockerfile
+  IMG: &IMG alpine-pueue-container:latest
   FEDORA: &FEDORA
     tty: yes
     hostname: fedora-webhook0
@@ -28,7 +32,7 @@ services:
   fedora-webhook0:
     tty: yes
     hostname: fedora-webhook0
-    image: fedora-pueue-container:latest
+    image: *IMG
     build: 
       dockerfile: fedora.Dockerfile
       context: .
@@ -46,7 +50,7 @@ services:
   fedora-pueued0:
     tty: yes
     hostname: fedora-pueued0
-    image: fedora-pueue-container:latest
+    image: *IMG
     build: 
       dockerfile: fedora.Dockerfile
       context: .
@@ -66,9 +70,9 @@ services:
   fedora-iodined0:
     #:<< &FEDORA
     hostname: fedora-pueued0
-    image: fedora-pueue-container:latest
+    image: *IMG
     build: 
-      dockerfile: fedora.Dockerfile
+      dockerfile: *DF
       context: .
     container_name: iodined0
     hostname: iodined0
