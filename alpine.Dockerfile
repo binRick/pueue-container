@@ -40,3 +40,16 @@ COPY files/webhook_server.yml /root/.config/webhook_server.yml
 RUN chmod 600 /root/.config/pueue/pueue.yml /root/.config/webhook_server.yml
 
 EXPOSE 8000
+
+
+
+FROM alpine-base-pkgs as alpine-iodine
+
+ADD iodine-0.7.0.tar.gz /
+WORKDIR /iodine-0.7.0
+RUN apk add zlib-dev automake
+RUN apk add cmake gcc automake autoconf
+RUN apk add make
+RUN apk add libgsf-dev dev86 libc-dev
+RUN apk add musl-dev
+RUN make
