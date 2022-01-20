@@ -23,7 +23,8 @@ services:
      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     restart: unless-stopped
     init: no
-    working_dir: /root/.config/pueue
+    working_dir: /root/.config
+    command: webhookserver
 
   fedora-webhook0:
     hostname: fedora-webhook0
@@ -83,7 +84,7 @@ services:
     restart: unless-stopped
     init: no
     working_dir: /root/.config/pueue
-    command: "/pueued.sh"
+    command: pueued -c /root/.config/pueue/pueue.yml --verbose
 
 
   fedora-scheduler0:
