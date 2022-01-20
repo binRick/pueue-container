@@ -2,31 +2,9 @@
 version: '3.4'
 #         systemd:           /sys/fs/cgroup:/sys/fs/cgroup:ro
 services:
-  alpine-scheduler0:
-    tty: yes
-    container_name: alpine-scheduler0
-    hostname: alpine-scheduler0
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
-    privileged: no
-    image: alpine-pueue-container:latest
-    build: 
-      dockerfile: alpine.Dockerfile
-      context: .
-    ports: 
-      - "8001:8001"
-    volumes:
-      - ./files/webhook_server.yml:/root/.config/webhook_server.yml
-      - ./files/pueue.yml:/root/.config/pueue/pueue.yml
-    environment:
-     - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-    restart: unless-stopped
-    init: no
-    working_dir: /root/.config
-    command: webhookserver
 
   fedora-webhook0:
+    tty: yes
     hostname: fedora-webhook0
     image: fedora-pueue-container:latest
     build: 
@@ -40,7 +18,7 @@ services:
     volumes:
       - ./files/webhook_server.yml:/root/.config/webhook_server.yml
     working_dir: /root/.config/pueue
-    command: "/webhook.sh"
+    command: webhookserver
 
   fedora-iodined0:
     hostname: fedora-pueued0
@@ -48,7 +26,7 @@ services:
     build: 
       dockerfile: fedora.Dockerfile
       context: .
-    tty: no
+    tty: yes
     container_name: iodined0
     hostname: iodined0
     dns:
@@ -69,6 +47,7 @@ services:
     command: "iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net"
 
   fedora-pueued0:
+    tty: yes
     hostname: fedora-pueued0
     image: fedora-pueue-container:latest
     build: 
