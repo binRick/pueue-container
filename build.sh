@@ -1,6 +1,6 @@
 #!/bin/bash
 set -eou pipefail
-DISTRO=${1:-fedora}
+DISTRO=${DISTRO:-fedora}
 
 ccmd="docker-compose -f container-compose.yaml build"
 eval "$ccmd"

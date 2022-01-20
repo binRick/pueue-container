@@ -1,6 +1,6 @@
 #!/bin/bash
 set -eou pipefail
-DISTRO=${1:-fedora};shift||true
+DISTRO=${DISTRO:-fedora};shift||true
 N=$DISTRO-c0
 cmd="${@:-ls /etc}"
 

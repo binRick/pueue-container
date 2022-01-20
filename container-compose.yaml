@@ -6,37 +6,43 @@ x-vars:
   DNS:    &DNS
     - 8.8.8.8
     - 1.1.1.1
-  DF: &DF fedora.Dockerfile
-  IMG: &IMG fedora-pueue-container:latest
-  DF: &_DF alpine.Dockerfile
-  IMG: &_IMG alpine-pueue-container:latest
+  #DF: &DF fedora.Dockerfile
+  #IMG: &IMG fedora-pueue-container:latest
+  DF: &DF alpine.Dockerfile
+  IMG: &IMG alpine-pueue-container:latest
+  BUILD: &BUILD
+    dockerfile: *DF
+    context: .
+  ALPINE: &ALPINE
+    dns: *DNS
+    build: 
+      dockerfile: *DF
+      context: .
+    environment:
+     - *PATH
+    restart: always
+    working_dir: /root/.config
+
   FEDORA: &FEDORA
     tty: yes
     dns: *DNS
     build: 
-      dockerfile: *IMG
+      dockerfile: *DF
       context: .
     environment:
      - *PATH
-    restart: unless-stopped
-    init: no
+    restart: always
     working_dir: /root/.config
 
 
 
-
-
 services:
-  fedora-webhook0:
+  webhook0:
     tty: yes
-    hostname: fedora-webhook0
+    hostname: webhook0
     image: *IMG
-    build: 
-      dockerfile: fedora.Dockerfile
-      context: .
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
+    build: *BUILD
+    dns: *DNS
     ports: 
       - "1212:1212"
     volumes:
@@ -45,48 +51,34 @@ services:
     working_dir: /root/.config/pueue
     command: webhookserver
 
-  fedora-pueued0:
+  pueued0:
     tty: yes
-    hostname: fedora-pueued0
+    hostname: pueued0
     image: *IMG
-    build: 
-      dockerfile: fedora.Dockerfile
-      context: .
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
+    build: *BUILD
+    dns: *DNS
     ports: 
       - "1313:1313"
     volumes:
       - ./files/pueue.yml:/root/.config/pueue/pueue.yml
       - /tmp/pueued.sock:/root/.local/share/pueue/pueue.socket
-    restart: unless-stopped
-    init: no
+    restart: always
     working_dir: /root/.config/pueue
     command: pueued -c /root/.config/pueue/pueue.yml --verbose
 
-  fedora-iodined0:
-    #:<< &FEDORA
-    hostname: fedora-pueued0
-    image: *IMG
-    build: 
-      dockerfile: *DF
-      context: .
-    container_name: iodined0
-    hostname: iodined0
-    dns: *DNS
+  iodined0:
     privileged: yes
     tty: yes
-    image: fedora-pueue-container:latest
-    build: 
-      dockerfile: fedora.Dockerfile
-      context: .
+    container_name: iodined0
+    hostname: iodined0
+    image: *IMG
+    build: *BUILD
+    dns: *DNS
     ports: 
       - "9553:53"
     environment:
      - *PATH
-    restart: unless-stopped
-    init: no
+    restart: always
     working_dir: /root/.config/pueue
     command: "iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net"
 
