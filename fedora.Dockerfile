@@ -114,3 +114,4 @@ COPY files/iodined.service /etc/systemd/system/.
 RUN chmod 0600 /etc/systemd/system/iodined.service
 
 RUN dnf -y install zsh tmux
+RUN dnf -y install net-tools

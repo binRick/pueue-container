@@ -1,6 +1,6 @@
 ---
 version: '3.4'
-
+#         systemd:           /sys/fs/cgroup:/sys/fs/cgroup:ro
 services:
   alpine-scheduler0:
     tty: yes
@@ -19,12 +19,73 @@ services:
     volumes:
       - ./files/webhook_server.yml:/root/.config/webhook_server.yml
       - ./files/pueue.yml:/root/.config/pueue/pueue.yml
-
     environment:
      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     restart: unless-stopped
     init: no
     working_dir: /root/.config/pueue
+
+  fedora-webhook0:
+    hostname: fedora-webhook0
+    image: fedora-pueue-container:latest
+    build: 
+      dockerfile: fedora.Dockerfile
+      context: .
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    ports: 
+      - "1212:1212"
+    volumes:
+      - ./files/webhook_server.yml:/root/.config/webhook_server.yml
+    working_dir: /root/.config/pueue
+    command: "/webhook.sh"
+
+  fedora-iodined0:
+    hostname: fedora-pueued0
+    image: fedora-pueue-container:latest
+    build: 
+      dockerfile: fedora.Dockerfile
+      context: .
+    tty: no
+    container_name: iodined0
+    hostname: iodined0
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    privileged: yes
+    image: fedora-pueue-container:latest
+    build: 
+      dockerfile: fedora.Dockerfile
+      context: .
+    ports: 
+      - "9553:53"
+    environment:
+     - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    restart: unless-stopped
+    init: no
+    working_dir: /root/.config/pueue
+    command: "iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net"
+
+  fedora-pueued0:
+    hostname: fedora-pueued0
+    image: fedora-pueue-container:latest
+    build: 
+      dockerfile: fedora.Dockerfile
+      context: .
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    ports: 
+      - "1313:1313"
+    volumes:
+      - ./files/pueue.yml:/root/.config/pueue/pueue.yml
+    restart: unless-stopped
+    init: no
+    working_dir: /root/.config/pueue
+    command: "/pueued.sh"
+
+
   fedora-scheduler0:
     tty: yes
     container_name: scheduler0
@@ -33,7 +94,7 @@ services:
       - 8.8.8.8
       - 1.1.1.1
     privileged: no
-    image: pueue-container:latest
+    image: fedora-pueue-container:latest
     build: 
       dockerfile: fedora.Dockerfile
       context: .
@@ -43,13 +104,13 @@ services:
       - ./files/webhook_server.yml:/root/.config/webhook_server.yml
       - ./files/pueue.yml:/root/.config/pueue/pueue.yml
 
-#    command: /pueued.sh
     #-xec "pueued -d -c /root/.config/pueue/pueue.yml && sleep 2 && webhookserver"
     environment:
      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     restart: unless-stopped
     init: no
     working_dir: /root/.config/pueue
+
 
 
 
