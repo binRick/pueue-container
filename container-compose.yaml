@@ -1,4 +1,8 @@
 ---
+x-vars:
+  DNS: &DNS
+    - 8.8.8.8
+    - 1.1.1.1
 version: '3.4'
 #         systemd:           /sys/fs/cgroup:/sys/fs/cgroup:ro
 services:
@@ -17,34 +21,9 @@ services:
       - "1212:1212"
     volumes:
       - ./files/webhook_server.yml:/root/.config/webhook_server.yml
+      - /tmp/pueued.sock:/root/.local/share/pueue/pueue_nuke.socket
     working_dir: /root/.config/pueue
     command: webhookserver
-
-  fedora-iodined0:
-    hostname: fedora-pueued0
-    image: fedora-pueue-container:latest
-    build: 
-      dockerfile: fedora.Dockerfile
-      context: .
-    tty: yes
-    container_name: iodined0
-    hostname: iodined0
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
-    privileged: yes
-    image: fedora-pueue-container:latest
-    build: 
-      dockerfile: fedora.Dockerfile
-      context: .
-    ports: 
-      - "9553:53"
-    environment:
-     - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-    restart: unless-stopped
-    init: no
-    working_dir: /root/.config/pueue
-    command: "iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net"
 
   fedora-pueued0:
     tty: yes
@@ -60,36 +39,38 @@ services:
       - "1313:1313"
     volumes:
       - ./files/pueue.yml:/root/.config/pueue/pueue.yml
+      - /tmp/pueued.sock:/root/.local/share/pueue/pueue_nuke.socket
     restart: unless-stopped
     init: no
     working_dir: /root/.config/pueue
     command: pueued -c /root/.config/pueue/pueue.yml --verbose
 
-
-  fedora-scheduler0:
+  fedora-iodined0:
+    #:<< &FEDORA
+    hostname: fedora-pueued0
+    image: fedora-pueue-container:latest
+    build: 
+      dockerfile: fedora.Dockerfile
+      context: .
+    container_name: iodined0
+    hostname: iodined0
+    dns: *DNS
+    privileged: yes
     tty: yes
-    container_name: scheduler0
-    hostname: scheduler0
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
-    privileged: no
     image: fedora-pueue-container:latest
     build: 
       dockerfile: fedora.Dockerfile
       context: .
     ports: 
-      - "8000:8000"
-    volumes:
-      - ./files/webhook_server.yml:/root/.config/webhook_server.yml
-      - ./files/pueue.yml:/root/.config/pueue/pueue.yml
-
-    #-xec "pueued -d -c /root/.config/pueue/pueue.yml && sleep 2 && webhookserver"
+      - "9553:53"
     environment:
      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     restart: unless-stopped
     init: no
     working_dir: /root/.config/pueue
+    command: "iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net"
+
+
 
 
 
