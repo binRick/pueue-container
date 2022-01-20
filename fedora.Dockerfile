@@ -28,7 +28,7 @@ RUN ls /iodine-0.7.0/bin/iodined
 RUN cp /iodine-0.7.0/bin/iodine /iodine-0.7.0/bin/iodined /
 
 
-FROM fedora:latest as fedora-pueue-container
+FROM fedora:latest as fedora-pueue
 RUN mkdir -p /root/.config/pueue
 COPY --from=fedora-binaries /pueue /bin/.
 COPY --from=fedora-binaries /pueued /bin/.

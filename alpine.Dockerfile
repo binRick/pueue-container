@@ -14,7 +14,7 @@ RUN apk add wireguard-tools
 FROM alpine-base-pkgs as alpine-compiler-pkgs
 RUN apk add make cmake gcc automake autoconf
 
-FROM alpine:3.14 as alpine-pueue-container
+FROM alpine:3.14 as alpine-pueue
 
 RUN mkdir -p /root/.config/pueue
 COPY files/pueue /bin/pueue

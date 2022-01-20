@@ -7,7 +7,7 @@ x-vars:
     - 8.8.8.8
     - 1.1.1.1
   DF: &DF alpine.Dockerfile
-  IMG: &IMG alpine-pueue-container:latest
+  IMG: &IMG alpine-pueue:latest
   BIMG: &BIMG alpine-binaries:latest
   BUILD: &BUILD
     dockerfile: *DF
