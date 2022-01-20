@@ -21,7 +21,7 @@ daemon:
 shared:
   pueue_directory: /root/.local/share/pueue
   use_unix_socket: true
-  unix_socket_path: ~/.local/share/pueue/pueue_root.socket
+  unix_socket_path: /root/.local/share/pueue/pueue_root.socket
   host: 127.0.0.1
   port: "6924"
   daemon_cert: /root/.local/share/pueue/certs/daemon.cert

@@ -6,8 +6,8 @@ ssl_cert_chain: null
 basic_auth_user: "test"
 basic_auth_password: "testtest"
 basic_auth_and_secret: false
-pueue_unix_socket: ~/.local/share/pueue/pueue_nuke.socket
-pueue_directory: ~/.local/share/pueue
+pueue_unix_socket: /root/.local/share/pueue/pueue_nuke.socket
+pueue_directory: /root/.local/share/pueue
 webhooks:
   -
     name: 'ls'
