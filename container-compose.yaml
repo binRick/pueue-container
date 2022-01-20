@@ -42,7 +42,7 @@ services:
     build: *BUILD
     dns: *DNS
     ports: 
-      - "1212:1212"
+      - "15001:8000"
     volumes:
       - ./files/webhook_server.yml:/root/.config/webhook_server.yml
       - /tmp/pueued.sock:/root/.local/share/pueue/pueue.socket
@@ -56,7 +56,7 @@ services:
     build: *BUILD
     dns: *DNS
     ports: 
-      - "1313:1313"
+      - "15002:6924"
     volumes:
       - ./files/pueue.yml:/root/.config/pueue/pueue.yml
       - /tmp/pueued.sock:/root/.local/share/pueue/pueue.socket
@@ -73,12 +73,14 @@ services:
     build: *BUILD
     dns: *DNS
     ports: 
-      - "9553:53"
+      - "15003:53/udp"
     environment:
      - *PATH
     restart: always
     working_dir: /root/.config/pueue
-    command: "iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net"
+    command: iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net
+    volumes:
+      - *CG
 
 
 
