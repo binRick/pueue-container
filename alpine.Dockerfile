@@ -39,7 +39,7 @@ COPY --from=alpine-iodine /iodined /bin/iodined
 #COPY --from=alpine-builder /cert.pem /root/.config/pueue/cert.pem
 
 
-RUN echo 'pueued -c /root/.config/pueue/pueue.yml -vv' > /pueued.sh
+RUN echo '/bin/pueued -c /root/.config/pueue/pueue.yml -vv' > /pueued.sh
 RUN echo 'webhookserver' > /webhookserver.sh
 RUN chmod 700 /pueued.sh /webhookserver.sh
 
