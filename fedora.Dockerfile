@@ -57,7 +57,7 @@ RUN git clone https://github.com/binRick/daemontools-encore-rpm
 WORKDIR /daemontools-encore-rpm
 RUN sh ./build.sh 1.11
 
-FROM fedora:latest as pueue-container
+FROM fedora:latest as fedora-pueue-container
 
 RUN mkdir -p /root/.config/pueue
 COPY --from=builder /pueue /bin/.
