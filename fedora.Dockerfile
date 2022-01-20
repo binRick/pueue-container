@@ -64,14 +64,14 @@ RUN dnf -y install systemd && dnf clean all && \
   rm -f /lib/systemd/system/basic.target.wants/* ;\
   rm -f /lib/systemd/system/anaconda.target.wants/*
 
-COPY files/pueued.service /etc/systemd/system/.
-RUN chmod 0600 /etc/systemd/system/pueued.service
+#COPY files/pueued.service /etc/systemd/system/.
+#RUN chmod 0600 /etc/systemd/system/pueued.service
 
 VOLUME ["/sys/fs/cgroup"]
 CMD "/sbin/init"
 
-COPY files/iodined.service /etc/systemd/system/.
-RUN chmod 0600 /etc/systemd/system/iodined.service
+#COPY files/iodined.service /etc/systemd/system/.
+#RUN chmod 0600 /etc/systemd/system/iodined.service
 
 RUN dnf -y install zsh tmux
 RUN dnf -y install net-tools
