@@ -61,7 +61,7 @@ services:
     volumes:
       - ./files/webhook_server.yml:/root/.config/webhook_server.yml
       - /tmp/pueued.sock:/root/.local/share/pueue/pueue.socket
-    working_dir: /root/.config/pueue
+    working_dir: /root/.config
     command: webhookserver
 
   pueued0:
@@ -92,7 +92,7 @@ services:
     environment:
      - *PATH
     restart: always
-    working_dir: /root/.config/pueue
+    working_dir: /root/
     command: iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net
     volumes:
       - *CG
