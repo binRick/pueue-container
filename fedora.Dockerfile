@@ -17,7 +17,15 @@ RUN chmod 700 /pueue /pueued /webhookserver
 
 
 
-
+FROM base-pkgs as iodine-builder
+RUN dnf -y install gcc make git
+ADD iodine-0.7.0.tar.gz /
+WORKDIR /iodine-0.7.0
+RUN dnf -y install zlib-devel
+RUN make
+RUN ls /iodine-0.7.0/bin/iodine
+RUN ls /iodine-0.7.0/bin/iodined
+RUN cp /iodine-0.7.0/bin/iodine /iodine-0.7.0/bin/iodined /
 
 
 FROM fedora:latest as fedora-pueue-container
@@ -25,8 +33,8 @@ RUN mkdir -p /root/.config/pueue
 COPY --from=binaries /pueue /bin/.
 COPY --from=binaries /pueued /bin/.
 COPY --from=binaries /webhookserver /bin/.
-#COPY --from=iodine-builder /iodine /bin/.
-#COPY --from=iodine-builder /iodined /bin/.
+COPY --from=iodine-builder /iodine /bin/.
+COPY --from=iodine-builder /iodined /bin/.
 #COPY --from=builder /key.pem /root/.config/pueue/key.pem
 #COPY --from=builder /cert.pem /root/.config/pueue/cert.pem
 
