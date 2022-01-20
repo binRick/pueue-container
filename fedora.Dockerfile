@@ -4,7 +4,7 @@ RUN dnf -y install bash zsh sudo
 
 FROM common-pkgs as base-pkgs
 RUN dnf -y install procps-ng iputils iproute coreutils \
-                   httpie socat bind-utils ireguard-tools  tmux zsh bash
+                   httpie socat bind-utils wireguard-tools  tmux zsh bash
 
 
 
