@@ -30,9 +30,12 @@ RUN cp bin/iodined /
 FROM alpine:3.14 as alpine-pueue
 
 RUN mkdir -p /root/.config/pueue
-ADD https://github.com/Nukesor/webhook-server/releases/download/v0.1.4/webhookserver-linux-amd64 /bin/webhookserver
-ADD https://github.com/Nukesor/pueue/releases/download/v1.0.4/pueued-linux-x86_64 /bin/pueued
-ADD https://github.com/Nukesor/pueue/releases/download/v1.0.4/pueue-linux-x86_64 /bin/pueue
+ADD files/webhookserver-linux-amd64-v0.1.4 /bin/webhookserver
+ADD files/pueue-linux-x86_64-v1.0.6 /bin/pueue
+ADD files/pueued-linux-x86_64-v1.0.6 /bin/pueued
+#https://github.com/Nukesor/webhook-server/releases/download/v0.1.4/webhookserver-linux-amd64 /bin/webhookserver
+#ADD https://github.com/Nukesor/pueue/releases/download/v1.0.4/pueued-linux-x86_64 /bin/pueued
+#ADD https://github.com/Nukesor/pueue/releases/download/v1.0.4/pueue-linux-x86_64 /bin/pueue
 #COPY files/pueue /bin/pueue
 #COPY files/pueued /bin/pueued
 #COPY files/webhookserver /bin/webhookserver
