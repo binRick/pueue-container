@@ -54,9 +54,9 @@ x-disabledservices:
   x-webhook: &WEBHOOK
     tty: false
     hostname: webhook0
-    image: fedora-pueue
+    image: fedora-webhook
     build:
-      dockerfile: fedora-pueue.Dockerfile
+      dockerfile: fedora-webhook.Dockerfile
       context: ./docker
     ports: 
       - 35001:8000
@@ -113,16 +113,17 @@ x-disabledservices:
      - *PATH
      - IODINED_PASS=4b4f41eb-85e8-4006-9644-13a4f378e830
 
+
 services:
-  sched: *SCHED
+  webhook: *WEBHOOK
   pueued: *PUEUED
+
+
+
+x-services:   
+  sched: *SCHED
   restic-rest-server: *RESTIC-REST-SERVER
   iodined: *IODINED
-  webhook: *WEBHOOK
-
-
-
-
 
 
 

@@ -37,7 +37,7 @@ RUN ~/.cargo/bin/cargo install --path .
 #RUN find ~/.cargo/bin
 RUN cp ~/.cargo/bin/pueue /.
 RUN cp ~/.cargo/bin/pueued /.
-RUN cp ~/.cargo/bin/webhookserver /.
+RUN cp ~/.cargo/usr/bin/webhookserver /.
 RUN apk add openssl
 #RUN openssl req -nodes -new -x509 -keyout /key.pem -out /cert.pem
 

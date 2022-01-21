@@ -26,9 +26,9 @@ RUN chown root:root /iodine /iodined
 
 FROM alpine:3.14 as alpine-webhookserver
 RUN mkdir -p /root/.config
-ADD files/webhookserver-linux-amd64-v0.1.4 /bin/webhookserver
-RUN chmod +x /bin/webhookserver
-RUN chown root:root /bin/webhookserver
+ADD files/webhookserver-linux-amd64-v0.1.4 /usr/bin/webhookserver
+RUN chmod +x /usr/bin/webhookserver
+RUN chown root:root /usr/bin/webhookserver
 COPY files/webhook_server.yml /root/.config/webhook_server.yml
 RUN chmod 600 /root/.config/webhook_server.yml
 RUN chown root:root /root/.config/webhook_server.yml
@@ -39,12 +39,12 @@ COPY --from=alpine-iodine-builder /iodine /usr/bin/iodine
 COPY --from=alpine-iodine-builder /iodined /usr/bin/iodined
 
 #COPY --from=alpine-iodine /iodined /bin/iodined
-#https://github.com/Nukesor/webhook-server/releases/download/v0.1.4/webhookserver-linux-amd64 /bin/webhookserver
+#https://github.com/Nukesor/webhook-server/releases/download/v0.1.4/webhookserver-linux-amd64 /usr/bin/webhookserver
 #ADD https://github.com/Nukesor/pueue/releases/download/v1.0.4/pueued-linux-x86_64 /bin/pueued
 #ADD https://github.com/Nukesor/pueue/releases/download/v1.0.4/pueue-linux-x86_64 /bin/pueue
 #COPY files/pueue /bin/pueue
 #COPY files/pueued /bin/pueued
-#COPY files/webhookserver /bin/webhookserver
+#COPY files/webhookserver /usr/bin/webhookserver
 #COPY --from=alpine-builder /webhookserver /bin/.
 #COPY --from=alpine-builder /key.pem /root/.config/pueue/key.pem
 #COPY --from=alpine-builder /cert.pem /root/.config/pueue/cert.pem
