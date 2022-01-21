@@ -124,10 +124,10 @@ x-disabledservices:
       dockerfile: fedora-ttyd.Dockerfile
       context: ./docker
     ports: 
-      - "18101:18101/tcp"
+      - "18105:18105/tcp"
     restart: always
     working_dir: /root/
-    command: /usr/bin/ttyd -t fontSize=30  -p 18101 -t disableLeaveAlert=true -- /bin/zsh -il
+    command: /usr/bin/ttyd -t fontSize=30  -p 18105 -t disableLeaveAlert=true -- sh
     #entrypoint: /usr/bin/ttyd -t fontSize=30  -p 18101 -t disableLeaveAlert=true -- /bin/zsh -il
 
 services:
