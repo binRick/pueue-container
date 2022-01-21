@@ -133,10 +133,11 @@ x-disabledservices:
 
   x-glue: &GLUE
     image: glue
+    privileged: yes
     cap_add:
       - NET_ADMIN
     build: 
-      dockerfile: fedora-glue.Dockerfile
+      dockerfile: glue.Dockerfile
       context: ./docker
     tty: false
     hostname: glue
@@ -145,10 +146,11 @@ x-disabledservices:
       - 8888:8888/tcp # HTTP proxy
       - 8388:8388/tcp # Shadowsocks
       - 8388:8388/udp # Shadowsocks
-    privileged: true
     volumes:
       - ./wireguard:/gluetun
     environment:
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - LOG_LEVEL=debug
       - VPN_TYPE=wireguard
       - VPNSP=custom
       - WIREGUARD_ENDPOINT_IP=1.2.3.4
@@ -181,11 +183,6 @@ x-disabledservices:
     command: /usr/bin/pueued -c /root/.config/pueue/pueue.yml -vv
 
   XXXXXXXXXXX:
-
-
-
-services:
-    glue: *GLUE
     restic-rest-server: *RESTIC-REST-SERVER
     webhook: *WEBHOOK
     ttyd: *TTYD
@@ -194,6 +191,11 @@ services:
     gottyd: *GOTTYD
     pueued: *PUEUED
     pueued: *PUEUED
+
+
+
+services:
+    glue: *GLUE
 
 
 
