@@ -3,5 +3,5 @@ RUN ls /
 RUN cat /entrypoint.sh
 
 
-FROM fedora:35 as restic-rest-server
+FROM fedora:35 as fedora-restic-rest-server
 RUN dnf -y install bash zsh git rsync restic openssh-clients tcpdump ngrep

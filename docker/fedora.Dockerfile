@@ -56,7 +56,7 @@ RUN chmod 0700 /bin/pueue /bin/pueued
 #COPY files/webhook_server.yml /root/.config/webhook_server.yml
 
 
-FROM docker.io/restic/rest-server as fedora-restic
+FROM docker.io/restic/rest-server as fedora-restic-rest-server
 RUN ls /
 RUN cat /entrypoint.sh
 
