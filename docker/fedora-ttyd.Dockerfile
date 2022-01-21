@@ -10,4 +10,6 @@ RUN dnf -y install json-c-devel json-parser-devel jsoncpp-devel libfastjson-deve
 
 RUN cmake . && make -j
 RUN cp ttyd /usr/bin/ttyd
-
+COPY files/t.sh /t.sh
+RUN chmod 0700 /t.sh
+ENTRYPOINT /t.sh
