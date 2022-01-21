@@ -143,9 +143,7 @@ x-disabledservices:
     hostname: glue
     working_dir: /etc/wireguard
     ports: 
-      - 8888:8888/tcp # HTTP proxy
-      - 8388:8388/tcp # Shadowsocks
-      - 8388:8388/udp # Shadowsocks
+      - 18883:18883/tcp # HTTP proxy
     volumes:
       - ./wireguard:/gluetun
     environment:
@@ -153,12 +151,11 @@ x-disabledservices:
       - LOG_LEVEL=debug
       - VPN_TYPE=wireguard
       - VPNSP=custom
-      - WIREGUARD_ENDPOINT_IP=1.2.3.4
-      - WIREGUARD_ENDPOINT_PORT=51820
-      - WIREGUARD_PUBLIC_KEY=wAUaJMhAq3NFutLHIdF8AN0B5WG8RndfQKLPTEDHal0=
-      - WIREGUARD_PRIVATE_KEY=wOEI9rqqbDwnN8/Bpp22sVz48T71vJ4fYmFWujulwUU=
-      - WIREGUARD_PRESHARED_KEY=wOEI9rqqbDwnN8/Bpp22sVz48T71vJ4fYmFWujulwUU=
-      - WIREGUARD_ADDRESS=10.64.222.21/32
+      - WIREGUARD_ENDPOINT_IP=173.230.142.14
+      - WIREGUARD_ENDPOINT_PORT=42730
+      - WIREGUARD_PUBLIC_KEY=2pIXhW+SSYawvL1mvUgPXKKzXY7P7yolvoXG2XgvkEY=
+      - WIREGUARD_PRIVATE_KEY=gOxhdwwiMmGPWrZ56i2f40QTu+2g4c2osklIt0ujX3Q=
+      - WIREGUARD_ADDRESS=10.19.19.20/32
       - TZ=
       - HTTPPROXY=on
       - HTTPPROXY_LOG=on
