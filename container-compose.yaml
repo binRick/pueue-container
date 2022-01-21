@@ -53,7 +53,6 @@ x-disabledservices:
 
   x-webhook: &WEBHOOK
     tty: false
-    hostname: webhook0
     image: fedora-webhook
     build:
       dockerfile: fedora-webhook.Dockerfile
@@ -131,11 +130,11 @@ x-disabledservices:
     #entrypoint: /usr/bin/ttyd -t fontSize=30  -p 18101 -t disableLeaveAlert=true -- /bin/zsh -il
 
 services:
+  restic-rest-server: *RESTIC-REST-SERVER
+  webhook: *WEBHOOK
   ttyd: *TTYD
   pueued: *PUEUED
-  webhook: *WEBHOOK
   sched: *SCHED
-  restic-rest-server: *RESTIC-REST-SERVER
   iodined: *IODINED
 
 
