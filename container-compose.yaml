@@ -106,7 +106,7 @@ services:
     ports: 
       - 35005:8000
     working_dir: /root
-    command: restic serve
+    command: /usr/bin/restic serve
 
 
 

@@ -1,6 +1,6 @@
 FROM fedora:latest as common-pkgs
 RUN dnf clean all
-RUN dnf -y install bash zsh sudo
+RUN dnf -y install bash zsh sudo restic
 
 FROM common-pkgs as base-pkgs
 RUN dnf -y install procps-ng iputils iproute coreutils \
