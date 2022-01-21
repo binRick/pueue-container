@@ -13,6 +13,6 @@ tf=.$DISTRO-container-compose.yaml
 cmd="$CM-compose -f $tf pull && $CM-compose -f $tf build"
 ansi --yellow --italic "$cmd"
 
-docker-compose -f $tf build --no-cache --parallel --progress tty --pull --force-rm 
+docker-compose -f $tf build --parallel --progress=tty --pull --force-rm 
 
 eval "$cmd"
