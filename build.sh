@@ -4,7 +4,7 @@ source .envrc
 git pull||git pull
 DISTRO=${DISTRO:-fedora}
 CM=${CM:-podman}
-command yaml2json >/dev/null || pip3 install json2yaml
+command -v yaml2json >/dev/null || pip3 install json2yaml
 
 tf=./.$DISTRO-docker-compose.yaml
 ./render_container_compose.sh 2>&1 | tee $tf
