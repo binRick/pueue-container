@@ -1,4 +1,4 @@
-FROM fedora:latest as common-pkgs
+FROM docker.io/fedora:35 as common-pkgs
 RUN dnf clean all
 #RUN dnf -y install bash zsh sudo
 
@@ -28,7 +28,7 @@ RUN make
 RUN cp ./bin/iodine ./bin/iodined /
 
 
-FROM fedora:latest as fedora-webhookserver
+FROM docker.io/fedora:35 as fedora-webhookserver
 ENV container=docker
 COPY --from=fedora-binaries /webhookserver /bin/webhookserver
 RUN mkdir -p /root/.config
@@ -36,7 +36,7 @@ COPY files/webhook_server.yml /root/.config/webhook_server.yml
 RUN chmod 600 /root/.config/webhook_server.yml
 RUN chmod 0700 /bin/webhookserver
 
-FROM fedora:latest as fedora-pueue
+FROM docker.io/fedora:35 as fedora-pueue
 ENV container=docker
 RUN dnf -y install procps-ng bash httpie iputils iproute socat zsh bind-utils wireguard-tools zsh tmux net-tools
 RUN mkdir -p /root/.config/pueue

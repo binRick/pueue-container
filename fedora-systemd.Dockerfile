@@ -1,4 +1,4 @@
-FROM fedora:latest as common-pkgs
+FROM docker.io/fedora:35 as common-pkgs
 RUN dnf clean all
 RUN dnf -y install bash zsh sudo
 
@@ -28,7 +28,7 @@ RUN ls /iodine-0.7.0/bin/iodined
 RUN cp /iodine-0.7.0/bin/iodine /iodine-0.7.0/bin/iodined /
 
 
-FROM fedora:latest as fedora-pueue
+FROM docker.io/fedora:35 as fedora-pueue
 RUN mkdir -p /root/.config/pueue
 COPY --from=fedora-binaries /pueue /bin/.
 COPY --from=fedora-binaries /pueued /bin/.
