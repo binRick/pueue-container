@@ -127,16 +127,16 @@ x-disabledservices:
       - "18101:18101/tcp"
     restart: always
     working_dir: /root/
-    #entrypoint: /usr/bin/ttyd -V -t fontSize=30  -p 18101 -t disableLeaveAlert=true -- /bin/zsh -il
-    command: /usr/bin/ttyd -V -t fontSize=30  -p 18101 -t disableLeaveAlert=true /bin/zsh -il
+    command: /usr/bin/ttyd -t fontSize=30  -p 18101 -t disableLeaveAlert=true -- /bin/zsh -il
+    #entrypoint: /usr/bin/ttyd -t fontSize=30  -p 18101 -t disableLeaveAlert=true -- /bin/zsh -il
 
 services:
   ttyd: *TTYD
-  pueued: *PUEUED
 
 
 
 x-services:   
+  pueued: *PUEUED
   webhook: *WEBHOOK
   sched: *SCHED
   restic-rest-server: *RESTIC-REST-SERVER
