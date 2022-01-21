@@ -6,7 +6,7 @@ DISTRO=${DISTRO:-fedora}
 CM=${CM:-docker}
 #command -v yaml2json >/dev/null || pip3 install json2yaml
 
-tf=.$DISTRO-docker-compose.yaml
+tf=.$DISTRO-container-compose.yaml
 
 ./render_container_compose.sh 2>&1 | tee $tf
 
