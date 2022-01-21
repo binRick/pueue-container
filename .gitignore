@@ -4,3 +4,4 @@ bin/docker
 .alpine-docker-compose.yaml
 bin/docker-compose
 .*.yaml
+data

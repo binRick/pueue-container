@@ -103,12 +103,14 @@ x-disabledservices:
     ports: 
       - 35005:8000
     working_dir: /root
-    command: /usr/bin/restic serve
+    command: /usr/bin/restic rest-serve
+    volumes:
+      - ./data:/data
 
 services:
   iodined0: *IODINED
   pueued0: *PUEUED
-#  restic0: *RESTIC
+  r0: *RESTIC
 
 
 
