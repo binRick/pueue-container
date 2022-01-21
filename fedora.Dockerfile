@@ -1,6 +1,6 @@
 FROM fedora:latest as common-pkgs
 RUN dnf clean all
-RUN dnf -y install bash zsh sudo restic
+RUN dnf -y install bash zsh sudo
 
 FROM common-pkgs as base-pkgs
 RUN dnf -y install procps-ng iputils iproute coreutils \
@@ -74,6 +74,11 @@ CMD "/sbin/init"
 #RUN chmod 0600 /etc/systemd/system/iodined.service
 
 RUN dnf -y install zsh tmux
+RUN dnf -y install net-tools
+
+
+FROM base-pkgs as restic
+RUN dnf -y install zsh tmux rsync git
 RUN dnf -y install net-tools
 RUN dnf -y install restic
 

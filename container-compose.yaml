@@ -8,6 +8,7 @@ x-vars:
     - 1.1.1.1
   DF: &DF ./alpine.Dockerfile
   IMG: &IMG localhost/alpine-pueue:latest
+  RMG: &RMG restic/rest-server:latest
   BIMG: &BIMG alpine-binaries:latest
   BUILD: &BUILD
     dockerfile: *DF
@@ -100,13 +101,14 @@ services:
   restic0:
     tty: no
     hostname: restic0
-    image: *IMG
+    image: *RMG
     build: *BUILD
     dns: *DNS
     ports: 
       - 35005:8000
     working_dir: /root
-    command: /usr/bin/restic serve
+    command: rpm -ql restic
+#/usr/bin/restic serve
 
 
 
