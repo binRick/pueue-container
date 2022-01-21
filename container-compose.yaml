@@ -67,21 +67,6 @@ x-disabledservices:
     depends_on:
       - "pueued"    
 
-  x-pueued: &PUEUED
-    tty: false
-    hostname: pueued0
-    image: fedora-pueue
-    build:
-      dockerfile: fedora-pueue.Dockerfile
-      context: ./docker
-    ports: 
-      - "15002:6924"
-    volumes:
-      - ./docker/files/pueue.yml:/root/.config/pueue/pueue.yml
-      - /tmp/pueued.sock:/root/.local/share/pueue/pueue.socket
-    working_dir: /root/.config/pueue
-    command: /usr/bin/pueued -c /root/.config/pueue/pueue.yml -vv
-
 
   x-restic-rest-server: &RESTIC-REST-SERVER
     tty: false
@@ -146,14 +131,29 @@ x-disabledservices:
     command: /usr/bin/ttyd -t fontSize=30  -p 18105 -t disableLeaveAlert=true -- sh
     #entrypoint: /usr/bin/ttyd -t fontSize=30  -p 18101 -t disableLeaveAlert=true -- /bin/zsh -il
 
+  x-pueued: &PUEUED
+    tty: false
+    hostname: pueued
+    image: fedora-pueue
+    build:
+      dockerfile: fedora-pueue.Dockerfile
+      context: ./docker
+    ports: 
+      - "15002:6924"
+    volumes:
+      - ./docker/files/pueue.yml:/root/.config/pueue/pueue.yml
+      - /tmp/pueued.sock:/root/.local/share/pueue/pueue.socket
+    working_dir: /root/.config/pueue
+    command: /usr/bin/pueued -c /root/.config/pueue/pueue.yml -vv
+
 services:
   restic-rest-server: *RESTIC-REST-SERVER
   webhook: *WEBHOOK
   ttyd: *TTYD
-  pueued: *PUEUED
   sched: *SCHED
   iodined: *IODINED
   gottyd: *GOTTYD
+  pueued: *PUEUED
 
 
 

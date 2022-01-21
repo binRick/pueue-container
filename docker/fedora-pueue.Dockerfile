@@ -1,4 +1,5 @@
 FROM docker.io/fedora:35 as common-pkgs
+
 RUN dnf clean all
 RUN dnf -y install bash zsh sudo
 
