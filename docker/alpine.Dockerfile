@@ -21,7 +21,8 @@ RUN apk add zlib-dev automake gcc autoconf make libgsf-dev dev86 libc-dev musl-d
 RUN make
 RUN cp bin/iodine /bin/iodine
 RUN cp bin/iodined /bin/iodined
-RUN ls /bin/iodine /bin/iodined
+RUN chmod +x /bin/iodine /bin/iodined
+RUN chown root:root /bin/iodine /bin/iodined
 
 FROM alpine:3.14 as alpine-webhookserver
 RUN mkdir -p /root/.config
