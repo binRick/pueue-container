@@ -103,7 +103,7 @@ x-disabledservices:
     ports: 
       - 35005:8000
     working_dir: /root
-    command: /entrypont.sh
+    command:  rest-server --no-auth --path /data
     volumes:
       - ./data:/data
 
@@ -112,7 +112,7 @@ x-iodined: &IODINED
     tty: false
     container_name: iodined0
     hostname: iodined0
-    image: fedora-pueued
+    image: fedora-iodine
     build: 
       dockerfile: fedora.Dockerfile
       context: ./docker
