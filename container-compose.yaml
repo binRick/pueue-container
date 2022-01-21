@@ -107,7 +107,7 @@ x-disabledservices:
     volumes:
       - ./data:/data
 
-x-iodined: &IODINED
+  x-iodined: &IODINED
     privileged: yes
     tty: false
     container_name: iodined0
@@ -123,15 +123,15 @@ x-iodined: &IODINED
      - *PATH
     restart: always
     working_dir: /root/
-    command: sh -c 'ls /bin/iodined*'
-#    command: /bin/iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net
+#    command: sh -c 'ls /bin/iodined*'
+    command: /bin/iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net
 #    command: sleep 666 
 
 services:
   restic0: 
     <<: *RESTIC
-  iodined0: 
-    <<: *IODINED
+#  iodined0: 
+#    <<: *IODINED
 #  pueued0: *PUEUED
 #  r0: *RESTIC
 
