@@ -23,40 +23,47 @@ RUN make
 RUN cp bin/iodine /bin/iodine
 RUN cp bin/iodined /bin/iodined
 
-FROM alpine:3.14 as alpine-pueue
-
-RUN mkdir -p /root/.config/pueue
+FROM alpine:3.14 as alpine-webhookserver
+RUN mkdir -p /root/.config
 ADD files/webhookserver-linux-amd64-v0.1.4 /bin/webhookserver
+RUN chmod +x /bin/webhookserver
+RUN chown root:root /bin/webhookserver
+COPY files/webhook_server.yml /root/.config/webhook_server.yml
+RUN chmod 600 /root/.config/webhook_server.yml
+RUN chown root:root /root/.config/webhook_server.yml
+EXPOSE 8000
+
+FROM alpine:3.14 as alpine-pueue
+#RUN apk add httpie socat wireguard-tools zsh bash curl wget
+RUN mkdir -p /root/.config/pueue
 ADD files/pueue-linux-x86_64-v1.0.6 /bin/pueue
 ADD files/pueued-linux-x86_64-v1.0.6 /bin/pueued
+RUN chmod +x /bin/pueue /bin/pueued
+COPY files/pueue.yml /root/.config/pueue/pueue.yml
+RUN chmod 600 /root/.config/pueue/pueue.yml
+RUN chown root:root /root/.config/pueue/pueue.yml
+#COPY --from=alpine-iodine /iodined /bin/iodined
 #https://github.com/Nukesor/webhook-server/releases/download/v0.1.4/webhookserver-linux-amd64 /bin/webhookserver
 #ADD https://github.com/Nukesor/pueue/releases/download/v1.0.4/pueued-linux-x86_64 /bin/pueued
 #ADD https://github.com/Nukesor/pueue/releases/download/v1.0.4/pueue-linux-x86_64 /bin/pueue
 #COPY files/pueue /bin/pueue
 #COPY files/pueued /bin/pueued
 #COPY files/webhookserver /bin/webhookserver
-COPY --from=alpine-iodine /iodined /bin/iodined
 #COPY --from=alpine-builder /webhookserver /bin/.
 #COPY --from=alpine-builder /key.pem /root/.config/pueue/key.pem
 #COPY --from=alpine-builder /cert.pem /root/.config/pueue/cert.pem
 
-
-RUN echo '/bin/pueued -c /root/.config/pueue/pueue.yml -vv' > /pueued.sh
-RUN echo 'webhookserver' > /webhookserver.sh
-RUN chmod 700 /pueued.sh /webhookserver.sh
-RUN chmod +x /bin/pueue /bin/pueued /bin/webhookserver
+#RUN echo '/bin/pueued -c /root/.config/pueue/pueue.yml -vv' > /pueued.sh
+#RUN echo 'webhookserver' > /webhookserver.sh
+#RUN chmod 700 /pueued.sh /webhookserver.sh
 
 #RUN chmod 600 /root/.config/pueue/key.pem /root/.config/pueue/key.pem
 
 
-RUN apk add httpie socat wireguard-tools zsh bash curl wget
 
 
-COPY files/pueue.yml /root/.config/pueue/pueue.yml
-COPY files/webhook_server.yml /root/.config/webhook_server.yml
-RUN chmod 600 /root/.config/pueue/pueue.yml /root/.config/webhook_server.yml
+#COPY files/webhook_server.yml /root/.config/webhook_server.yml
 
-EXPOSE 8000
 
 
 
