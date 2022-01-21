@@ -108,14 +108,8 @@ x-disabledservices:
       - ./data:/data
 
   x-iodined: &IODINED
-#    command: sleep 666 
-
-services:
-#  restic0: 
-#    <<: *RESTIC
-  iodined0: 
     privileged: yes
-    tty: true
+    tty: false
     image: fedora-iodine
     build: 
       dockerfile: fedora-iodine.Dockerfile
@@ -124,11 +118,18 @@ services:
       - "54:53/udp"
     restart: always
     working_dir: /root/
-    command: sh 
-    #/bin/iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net
+    command: /usr/bin/iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net
+    environment:
+     - *PATH
+     - IODINED_PASS=4b4f41eb-85e8-4006-9644-13a4f378e830
 #    command: sh -c 'ls /bin/iodined*'
 #  pueued0: *PUEUED
 #  r0: *RESTIC
+#    command: sleep 666 
+
+services:
+  restic0: *RESTIC
+  iodined0: *IODINED
 
 
 
