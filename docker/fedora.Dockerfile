@@ -25,9 +25,7 @@ RUN dnf -y install gcc make git zlib-devel
 ADD files/iodine-0.7.0.tar.gz /
 WORKDIR /iodine-0.7.0
 RUN make
-RUN ls /iodine-0.7.0/bin/iodine
-RUN ls /iodine-0.7.0/bin/iodined
-RUN cp /iodine-0.7.0/bin/iodine /iodine-0.7.0/bin/iodined /
+RUN cp ./bin/iodine ./bin/iodined /
 
 
 FROM fedora:latest as fedora-webhookserver
