@@ -1,0 +1,9 @@
+[Unit]
+Description=Pueued
+
+[Service]
+Restart=yes
+ExecStart=/usr/bin/pueued -vv
+
+[Install]
+WantedBy=default.target
