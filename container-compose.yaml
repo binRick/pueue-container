@@ -122,7 +122,7 @@ x-disabledservices:
     tty: false
     image: fedora-ttyd
     build: 
-      dockerfile: fedora-ttyd.dockerfile
+      dockerfile: fedora-ttyd.Dockerfile
       context: ./docker
     ports: 
       - "18106:18106/tcp"
@@ -158,6 +158,11 @@ x-disabledservices:
       - WIREGUARD_PRESHARED_KEY=wOEI9rqqbDwnN8/Bpp22sVz48T71vJ4fYmFWujulwUU=
       - WIREGUARD_ADDRESS=10.64.222.21/32
       - TZ=
+      - HTTPPROXY=on
+      - HTTPPROXY_LOG=on
+      - FIREWALL_OUTBOUND_SUBNETS=192.168.1.0/24
+      #-HTTPPROXY_USER 
+      #-HTTPPROXY_PASSWORD 
 
 
   x-pueued: &PUEUED
@@ -176,6 +181,11 @@ x-disabledservices:
     command: /usr/bin/pueued -c /root/.config/pueue/pueue.yml -vv
 
   XXXXXXXXXXX:
+
+
+
+services:
+    glue: *GLUE
     restic-rest-server: *RESTIC-REST-SERVER
     webhook: *WEBHOOK
     ttyd: *TTYD
@@ -184,11 +194,6 @@ x-disabledservices:
     gottyd: *GOTTYD
     pueued: *PUEUED
     pueued: *PUEUED
-
-
-
-services:
-  glue: *GLUE
 
 
 
