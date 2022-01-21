@@ -85,7 +85,7 @@ x-disabledservices:
   x-restic-rest-server: &RESTIC-REST-SERVER
     tty: false
     hostname: restic-rest-server
-    image: restic-rest-server
+    image: fedora-restic-rest-server
     build:
       dockerfile: fedora-restic.Dockerfile
       context: ./docker
