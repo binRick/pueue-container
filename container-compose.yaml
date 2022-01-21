@@ -93,9 +93,9 @@ x-disabledservices:
 
 
   RESTIC: &RESTIC
-    tty: true
+    tty: false
     hostname: restic0
-    image: fedora-restic
+    image: docker.io/restic/rest-server
     build:
       dockerfile: fedora.Dockerfile
       context: ./docker
@@ -103,7 +103,7 @@ x-disabledservices:
     ports: 
       - 35005:8000
     working_dir: /root
-#    command: sh -x /entrypont.sh
+    command: /entrypont.sh
     volumes:
       - ./data:/data
 

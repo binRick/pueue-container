@@ -1,6 +1,6 @@
 FROM fedora:latest as common-pkgs
 RUN dnf clean all
-RUN dnf -y install bash zsh sudo
+#RUN dnf -y install bash zsh sudo
 
 FROM common-pkgs as base-pkgs
 RUN dnf -y install procps-ng iputils iproute coreutils \
@@ -58,7 +58,9 @@ RUN chmod 0700 /bin/pueue /bin/pueued
 #COPY files/webhook_server.yml /root/.config/webhook_server.yml
 
 
-FROM restic/rest-server as fedora-restic
+FROM docker.io/restic/rest-server as fedora-restic
+RUN ls /
+RUN cat /entrypoint.sh
 
 FROM base-pkgs as fedora-iodine
 RUN dnf -y install net-tools zsh tmux bash
