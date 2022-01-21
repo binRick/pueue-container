@@ -34,7 +34,9 @@ x-vars:
     tty: yes
     dns: *DNS
     image: *IMG
-    build: *BIM
+    build:
+      dockerfile: fedora.Dockerfile
+      context: ./docker
     environment:
      - *PATH
     restart: always
@@ -45,7 +47,9 @@ x-disabledservices:
     tty: false
     hostname: scheduler0
     image: *IMG
-    build: *BIM
+    build:
+      dockerfile: fedora.Dockerfile
+      context: ./docker
     dns: *DNS
     volumes:
       - ./files/net-pueue.yml:/root/.config/pueue/pueue.yml
@@ -57,7 +61,9 @@ x-disabledservices:
     tty: false
     hostname: webhook0
     image: *IMG
-    build: *BIM
+    build:
+      dockerfile: fedora.Dockerfile
+      context: ./docker
     dns: *DNS
     ports: 
       - 35001:8000
@@ -71,7 +77,9 @@ x-disabledservices:
     tty: no
     hostname: pueued0
     image: *IMG
-    build: *BIM
+    build:
+      dockerfile: fedora.Dockerfile
+      context: ./docker
     dns: *DNS
     ports: 
       - "15002:6924"
@@ -87,14 +95,15 @@ x-disabledservices:
   RESTIC: &RESTIC
     tty: true
     hostname: restic0
-    image: *RESTIC-IMG
-    build: *RESTIC-BUILD
+    image: fedora-restic
+    build:
+      dockerfile: fedora.Dockerfile
+      context: ./docker
     dns: *DNS
     ports: 
       - 35005:8000
     working_dir: /root
-    command: sleep 666 
-#/usr/bin/restic rest-serve
+#    command: sh -x /entrypont.sh
     volumes:
       - ./data:/data
 
@@ -103,7 +112,7 @@ x-iodined: &IODINED
     tty: false
     container_name: iodined0
     hostname: iodined0
-    image: alpine-pueued
+    image: fedora-pueued
     build: 
       dockerfile: fedora.Dockerfile
       context: ./docker
@@ -114,12 +123,15 @@ x-iodined: &IODINED
      - *PATH
     restart: always
     working_dir: /root/
- #   command: /bin/iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net
-    command: sleep 666 
+#    command: ls /bin/
+    command: /bin/iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net
+#    command: sleep 666 
     volumes:
       - *CG
 
 services:
+  restic0: 
+    <<: *RESTIC
   iodined0: 
     <<: *IODINED
 #  pueued0: *PUEUED
