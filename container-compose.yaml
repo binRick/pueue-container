@@ -75,6 +75,7 @@ x-disabledservices:
 
   PUEUED: &PUEUED
     tty: false
+    image: fedora-pueue
     build:
       dockerfile: fedora.Dockerfile
       context: ./docker
