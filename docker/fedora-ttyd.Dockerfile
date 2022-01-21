@@ -6,5 +6,7 @@ RUN dnf -y install zlib-devel
 RUN dnf -y install libuv-devel
 RUN dnf -y install libwebsockets-devel
 RUN dnf -y install openssl openssl-devel
+RUN dnf -y install json-c-devel json-parser-devel jsoncpp-devel libfastjson-devel
+
 RUN cmake . && make -j
 RUN ls
