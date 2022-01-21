@@ -97,6 +97,19 @@ services:
     command: /bin/webhookserver
 
 
+  restic0:
+    tty: no
+    hostname: restic0
+    image: *IMG
+    build: *BUILD
+    dns: *DNS
+    ports: 
+      - 35005:8000
+    working_dir: /root
+    command: restic serve
+
+
+
 
 
 

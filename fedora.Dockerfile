@@ -75,6 +75,7 @@ CMD "/sbin/init"
 
 RUN dnf -y install zsh tmux
 RUN dnf -y install net-tools
+RUN dnf -y install restic
 
 
 
