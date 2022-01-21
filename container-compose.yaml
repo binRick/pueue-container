@@ -117,17 +117,32 @@ x-disabledservices:
     depends_on:
       - "webhook"    
 
+  x-ttyd: &TTYD
+    tty: false
+    image: fedora-ttyd
+    build: 
+      dockerfile: fedora-ttyd.Dockerfile
+      context: ./docker
+    ports: 
+      - "18101:18101/tcp"
+    restart: always
+    working_dir: /root/
+    command: /usr/bin/ttyd --help
+    environment:
+     - *PATH
+     - IODINED_PASS=4b4f41eb-85e8-4006-9644-13a4f378e830
 
 services:
-  webhook: *WEBHOOK
-  pueued: *PUEUED
-  sched: *SCHED
-  restic-rest-server: *RESTIC-REST-SERVER
-  iodined: *IODINED
+  ttyd: *TTYD
 
 
 
 x-services:   
+  pueued: *PUEUED
+  webhook: *WEBHOOK
+  sched: *SCHED
+  restic-rest-server: *RESTIC-REST-SERVER
+  iodined: *IODINED
 
 
 
