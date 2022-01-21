@@ -4,5 +4,6 @@ ADD files/ttyd-1.6.3.tar.gz /
 WORKDIR /ttyd-1.6.3
 RUN dnf -y install zlib-devel
 RUN dnf -y install libuv-devel
+RUN dnf -y install libwebsockets-devel
 RUN cmake . && make -j
 RUN ls
