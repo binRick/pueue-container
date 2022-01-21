@@ -34,7 +34,7 @@ RUN chmod 600 /root/.config/webhook_server.yml
 RUN chown root:root /root/.config/webhook_server.yml
 EXPOSE 8000
 
-FROM alpine:3.14 as alpine-iodine
+FROM alpine-base-pkgs as alpine-iodine
 COPY --from=alpine-iodine-builder /iodine /usr/bin/iodine
 COPY --from=alpine-iodine-builder /iodined /usr/bin/iodined
 
