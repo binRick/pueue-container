@@ -126,7 +126,12 @@ x-disabledservices:
       - "18105:18105/tcp"
     restart: always
     working_dir: /root/
-    command: env GOTTY_PERMIT_WRITE=1 GOTTY_PORT=19501 GOTTY_RECONNECT=1 GOTTY_RECONNECT_TIME=5 ./gotty sh
+    command: /usr/bin/gotty /bin/sh
+    environment:
+     - GOTTY_PERMIT_WRITE=1
+     - GOTTY_PORT=19501 
+     - GOTTY_RECONNECT=1 
+     - GOTTY_RECONNECT_TIME=5 
 
   x-ttyd: &TTYD
     tty: false
