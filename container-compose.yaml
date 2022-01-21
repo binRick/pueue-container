@@ -7,11 +7,18 @@ x-vars:
     - 8.8.8.8
     - 1.1.1.1
   DF: &DF alpine.Dockerfile
-  IMG: &IMG alpine-pueue:latest
-  RMG: &RMG alpine-restic/rest-server:latest
-  BIMG: &BIMG alpine-binaries:latest
-  BUILD: &BUILD
-    dockerfile: *DF
+  IMG: &IMG alpine-pueue
+  RMG: &RMG alpine-restic
+  BIMG: &BIMG alpine-binaries
+  RESTIC-IMG: &RESTIC-IMG alpine-restic
+  RESTIC-BUILD: &RESTIC-BUILD
+    dockerfile: alpine-restic
+    context: .
+  BRB: &BRB
+    dockerfile: *RMG
+    context: .
+  BIM: &BIM
+    dockerfile: *IMG
     context: .
   ALPINE: &ALPINE
     dns: *DNS
@@ -26,20 +33,19 @@ x-vars:
   FEDORA: &FEDORA
     tty: yes
     dns: *DNS
-    build: 
-      dockerfile: *DF
-      context: .
+    image: *IMG
+    build: *BIM
     environment:
      - *PATH
     restart: always
     working_dir: /root/.config
 
 x-disabledservices:
-  scheduler0:
+  SCHED: &SCHED
     tty: false
     hostname: scheduler0
     image: *IMG
-    build: *BUILD
+    build: *BIM
     dns: *DNS
     volumes:
       - ./files/net-pueue.yml:/root/.config/pueue/pueue.yml
@@ -47,11 +53,11 @@ x-disabledservices:
     working_dir: /root/.config/pueue
     command: sh -c "while :; do date; /bin/pueue status; sleep 5; done"
 
-  webhook0: &WEBHOOK
+  WEBHOOK: &WEBHOOK
     tty: false
     hostname: webhook0
     image: *IMG
-    build: *BUILD
+    build: *BIM
     dns: *DNS
     ports: 
       - 35001:8000
@@ -65,7 +71,7 @@ x-disabledservices:
     tty: no
     hostname: pueued0
     image: *IMG
-    build: *BUILD
+    build: *BIM
     dns: *DNS
     ports: 
       - "15002:6924"
@@ -74,15 +80,33 @@ x-disabledservices:
       - /tmp/pueued.sock:/root/.local/share/pueue/pueue.socket
     restart: always
     working_dir: /root/.config/pueue
-    command: /bin/pueued -vv -c /root/.config/pueue/pueue.yml
+    command: sleep 666 
+ #   command: /bin/pueued -vv -c /root/.config/pueue/pueue.yml
 
-  IODINED: &IODINED
+
+  RESTIC: &RESTIC
+    tty: true
+    hostname: restic0
+    image: *RESTIC-IMG
+    build: *RESTIC-BUILD
+    dns: *DNS
+    ports: 
+      - 35005:8000
+    working_dir: /root
+    command: sleep 666 
+#/usr/bin/restic rest-serve
+    volumes:
+      - ./data:/data
+
+x-iodined: &IODINED
     privileged: yes
     tty: false
     container_name: iodined0
     hostname: iodined0
-    image: *IMG
-    build: *BUILD
+    image: alpine-pueued
+    build: 
+      dockerfile: fedora.Dockerfile
+      context: ./docker
     dns: *DNS
     ports: 
       - "54:53/udp"
@@ -90,27 +114,16 @@ x-disabledservices:
      - *PATH
     restart: always
     working_dir: /root/
-    command: /bin/iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net
+ #   command: /bin/iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net
+    command: sleep 666 
     volumes:
       - *CG
 
-  RESTIC: &RESTIC
-    tty: false
-    hostname: restic0
-    image: *RMG
-    build: *BUILD
-    dns: *DNS
-    ports: 
-      - 35005:8000
-    working_dir: /root
-    command: /usr/bin/restic rest-serve
-    volumes:
-      - ./data:/data
-
 services:
-  iodined0: *IODINED
-  pueued0: *PUEUED
-  r0: *RESTIC
+  iodined0: 
+    <<: *IODINED
+#  pueued0: *PUEUED
+#  r0: *RESTIC
 
 
 
