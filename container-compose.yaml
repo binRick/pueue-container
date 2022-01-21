@@ -65,6 +65,8 @@ x-disabledservices:
       - /tmp/pueued.sock:/root/.local/share/pueue/pueue.socket
     working_dir: /root/.config
     command: /usr/bin/webhookserver
+    depends_on:
+      - "pueued"    
 
   x-pueued: &PUEUED
     tty: false
@@ -112,6 +114,8 @@ x-disabledservices:
     environment:
      - *PATH
      - IODINED_PASS=4b4f41eb-85e8-4006-9644-13a4f378e830
+    depends_on:
+      - "webhook"    
 
 
 services:
