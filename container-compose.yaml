@@ -61,7 +61,7 @@ x-disabledservices:
     ports: 
       - 35001:8000
     volumes:
-      - ./files/webhook_server.yml:/root/.config/webhook_server.yml
+      - ./docker/files/webhook_server.yml:/root/.config/webhook_server.yml
       - /tmp/pueued.sock:/root/.local/share/pueue/pueue.socket
     working_dir: /root/.config
     command: /usr/bin/webhookserver
