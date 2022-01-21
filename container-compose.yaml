@@ -128,7 +128,7 @@ x-disabledservices:
     restart: always
     working_dir: /root/
     #entrypoint: /usr/bin/ttyd -V -t fontSize=30  -p 18101 -t disableLeaveAlert=true -- /bin/zsh -il
-    command: /t.sh
+    command: /usr/bin/ttyd -V -t fontSize=30  -p 18101 -t disableLeaveAlert=true /bin/zsh -il
 
 services:
   ttyd: *TTYD
