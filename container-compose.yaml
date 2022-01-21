@@ -61,7 +61,7 @@ x-disabledservices:
     working_dir: /root/.config
     command: /bin/webhookserver
 
-  pueued0: &PUEUED
+  PUEUED: &PUEUED
     tty: no
     hostname: pueued0
     image: *IMG
@@ -107,6 +107,7 @@ x-disabledservices:
 
 services:
   iodined0: *IODINED
+  pueued0: *PUEUED
 #  restic0: *RESTIC
 
 
