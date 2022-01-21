@@ -127,7 +127,7 @@ x-disabledservices:
       - "18101:18101/tcp"
     restart: always
     working_dir: /root/
-    command: /usr/bin/ttyd --help
+    command: '/usr/bin/ttyd -t titleFixed="Terminal Title" -t fontSize="30" -t cursorStyle="Menlo"  -p 18101 -t disableLeaveAlert=true zsh'
     environment:
      - *PATH
      - IODINED_PASS=4b4f41eb-85e8-4006-9644-13a4f378e830
