@@ -8,14 +8,10 @@ x-vars:
     - 1.1.1.1
   DF: &DF alpine.Dockerfile
   IMG: &IMG alpine-pueue
-  RMG: &RMG alpine-restic
   BIMG: &BIMG alpine-binaries
   RESTIC-IMG: &RESTIC-IMG alpine-restic
   RESTIC-BUILD: &RESTIC-BUILD
     dockerfile: alpine-restic
-    context: .
-  BRB: &BRB
-    dockerfile: *RMG
     context: .
 
   BIM: &BIM
