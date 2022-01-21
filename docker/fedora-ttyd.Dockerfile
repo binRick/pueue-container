@@ -1,2 +1,2 @@
-FROM docker.io/restic/rest-server as fedora-ttyd
-RUN DNF -y install ttyd
+FROM docker.io/fedora:35 as fedora-ttyd
+RUN dnf -y install ttyd
