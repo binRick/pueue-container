@@ -14,15 +14,15 @@ RUN apk add wireguard-tools
 FROM alpine-base-pkgs as alpine-compiler-pkgs
 RUN apk add make cmake gcc automake autoconf
 
-FROM alpine-base-pkgs as alpine-iodine
+FROM alpine-base-pkgs as alpine-iodine-builder
 ADD files/iodine-0.7.0.tar.gz /
 WORKDIR /iodine-0.7.0
 RUN apk add zlib-dev automake gcc autoconf make libgsf-dev dev86 libc-dev musl-dev
-RUN make
-RUN cp bin/iodine /bin/iodine
-RUN cp bin/iodined /bin/iodined
-RUN chmod +x /bin/iodine /bin/iodined
-RUN chown root:root /bin/iodine /bin/iodined
+RUN make -j
+RUN cp bin/iodine /iodine
+RUN cp bin/iodined /iodined
+RUN chmod +x /iodine /iodined
+RUN chown root:root /iodine /iodined
 
 FROM alpine:3.14 as alpine-webhookserver
 RUN mkdir -p /root/.config
@@ -33,6 +33,10 @@ COPY files/webhook_server.yml /root/.config/webhook_server.yml
 RUN chmod 600 /root/.config/webhook_server.yml
 RUN chown root:root /root/.config/webhook_server.yml
 EXPOSE 8000
+
+FROM alpine:3.14 as alpine-iodine
+COPY --from=alpine-iodine-builder /iodine /usr/bin/iodine
+COPY --from=alpine-iodine-builder /iodined /usr/bin/iodined
 
 FROM alpine:3.14 as alpine-pueue
 #RUN apk add httpie socat wireguard-tools zsh bash curl wget
