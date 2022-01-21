@@ -45,6 +45,7 @@ COPY --from=alpine-iodine /iodined /bin/iodined
 RUN echo '/bin/pueued -c /root/.config/pueue/pueue.yml -vv' > /pueued.sh
 RUN echo 'webhookserver' > /webhookserver.sh
 RUN chmod 700 /pueued.sh /webhookserver.sh
+RUN chmod +x /bin/pueue /bin/pueued /bin/webhookserver
 
 #RUN chmod 600 /root/.config/pueue/key.pem /root/.config/pueue/key.pem
 
