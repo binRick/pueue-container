@@ -5,5 +5,6 @@ WORKDIR /ttyd-1.6.3
 RUN dnf -y install zlib-devel
 RUN dnf -y install libuv-devel
 RUN dnf -y install libwebsockets-devel
+RUN dnf -y install openssl openssl-devel
 RUN cmake . && make -j
 RUN ls
