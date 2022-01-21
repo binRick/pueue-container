@@ -87,8 +87,7 @@ x-disabledservices:
     restart: always
     working_dir: /root/.config/pueue
 #    command: sleep 666 
-    command: sh
-    #/usr/bin/pueued -vv -c /root/.config/pueue/pueue.yml
+    command: /usr/bin/pueued -vv -c /root/.config/pueue/pueue.yml
 
 
   RESTIC: &RESTIC
@@ -124,8 +123,8 @@ x-disabledservices:
 
 services:
   pueued0: *PUEUED
-#  restic0: *RESTIC
-#  iodined0: *IODINED
+  restic0: *RESTIC
+  iodined0: *IODINED
 
 
 
