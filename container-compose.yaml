@@ -121,13 +121,13 @@ x-disabledservices:
 services:
   webhook: *WEBHOOK
   pueued: *PUEUED
+  sched: *SCHED
+  restic-rest-server: *RESTIC-REST-SERVER
+  iodined: *IODINED
 
 
 
 x-services:   
-  sched: *SCHED
-  restic-rest-server: *RESTIC-REST-SERVER
-  iodined: *IODINED
 
 
 
