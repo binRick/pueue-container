@@ -32,10 +32,11 @@ RUN cp /iodine-0.7.0/bin/iodine /iodine-0.7.0/bin/iodined /
 
 FROM fedora:latest as fedora-webhookserver
 ENV container=docker
-COPY --from=fedora-binaries /webhookserver /bin/.
+COPY --from=fedora-binaries /webhookserver /bin/webhookserver
+RUN mkdir -p /root/.config
 COPY files/webhook_server.yml /root/.config/webhook_server.yml
-RUN chmod 600 /root/.config/pueue/pueue.yml /root/.config/webhook_server.yml
-RUN chmod 0700 /webhookserver
+RUN chmod 600 /root/.config/webhook_server.yml
+RUN chmod 0700 /bin/webhookserver
 
 FROM fedora:latest as fedora-pueue
 ENV container=docker
