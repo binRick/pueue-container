@@ -38,15 +38,6 @@ FROM alpine-base-pkgs as alpine-iodine
 COPY --from=alpine-iodine-builder /iodine /usr/bin/iodine
 COPY --from=alpine-iodine-builder /iodined /usr/bin/iodined
 
-FROM alpine:3.14 as alpine-pueue
-#RUN apk add httpie socat wireguard-tools zsh bash curl wget
-RUN mkdir -p /root/.config/pueue
-ADD files/pueue-linux-x86_64-v1.0.6 /usr/bin/pueue
-ADD files/pueued-linux-x86_64-v1.0.6 /usr/bin/pueued
-RUN chmod +x /usr/bin/pueue /usr/bin/pueued
-COPY files/pueue.yml /root/.config/pueue/pueue.yml
-RUN chmod 600 /root/.config/pueue/pueue.yml
-RUN chown root:root /root/.config/pueue/pueue.yml
 #COPY --from=alpine-iodine /iodined /bin/iodined
 #https://github.com/Nukesor/webhook-server/releases/download/v0.1.4/webhookserver-linux-amd64 /bin/webhookserver
 #ADD https://github.com/Nukesor/pueue/releases/download/v1.0.4/pueued-linux-x86_64 /bin/pueued
@@ -77,3 +68,14 @@ RUN apk add restic
 
 FROM docker.io/restic/rest-server as alpine-restic
 RUN ls /
+
+
+FROM alpine:3.14 as alpine-p
+#RUN apk add httpie socat wireguard-tools zsh bash curl wget
+RUN mkdir -p /root/.config/pueue
+ADD files/pueue-linux-x86_64-v1.0.6 /usr/bin/pueue
+ADD files/pueued-linux-x86_64-v1.0.6 /usr/bin/pueued
+RUN chmod +x /usr/bin/pueue /usr/bin/pueued
+COPY files/pueue.yml /root/.config/pueue/pueue.yml
+RUN chmod 600 /root/.config/pueue/pueue.yml
+RUN chown root:root /root/.config/pueue/pueue.yml

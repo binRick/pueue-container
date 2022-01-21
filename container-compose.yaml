@@ -52,7 +52,7 @@ x-disabledservices:
       context: ./docker
     dns: *DNS
     volumes:
-      - ./files/net-pueue.yml:/root/.config/pueue/pueue.yml
+      - ./docker/files/net-pueue.yml:/root/.config/pueue/pueue.yml
     restart: always
     working_dir: /root/.config/pueue
     command: sh -c "while :; do date; /bin/pueue status; sleep 5; done"
@@ -75,20 +75,20 @@ x-disabledservices:
 
   PUEUED: &PUEUED
     tty: false
-    image: fedora-pueue
+    image: fedora-p
     build:
       dockerfile: fedora.Dockerfile
       context: ./docker
-    dns: *DNS
     ports: 
       - "15002:6924"
     volumes:
-      - ./files/pueue.yml:/root/.config/pueue/pueue.yml
+      - ./docker/files/pueue.yml:/root/.config/pueue/pueue.yml
       - /tmp/pueued.sock:/root/.local/share/pueue/pueue.socket
     restart: always
     working_dir: /root/.config/pueue
 #    command: sleep 666 
-    command: /usr/bin/pueued -vv -c /root/.config/pueue/pueue.yml
+    command: sh
+    #/usr/bin/pueued -vv -c /root/.config/pueue/pueue.yml
 
 
   RESTIC: &RESTIC
