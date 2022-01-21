@@ -45,7 +45,7 @@ RUN mkdir -p /root/.config/pueue
 COPY files/pueue.yml /root/.config/pueue/pueue.yml
 COPY --from=fedora-binaries /pueue /bin/pueue
 COPY --from=fedora-binaries /pueued /bin/pueued
-RUN chmod 0700 /pueue /pueued
+RUN chmod 0700 /bin/pueue /bin/pueued
 #COPY --from=fedora-binaries /webhookserver /bin/.
 #COPY --from=iodine-builder /iodine /bin/.
 #COPY --from=iodine-builder /iodined /bin/.
