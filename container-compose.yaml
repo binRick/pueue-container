@@ -122,7 +122,7 @@ x-disabledservices:
     tty: false
     image: fedora-ttyd
     build: 
-      dockerfile: fedora-ttyd.Dockerfile
+      dockerfile: fedora-ttyd.dockerfile
       context: ./docker
     ports: 
       - "18106:18106/tcp"
@@ -130,6 +130,35 @@ x-disabledservices:
     working_dir: /root/
     command: /usr/bin/ttyd -t fontSize=30  -p 18105 -t disableLeaveAlert=true -- sh
     #entrypoint: /usr/bin/ttyd -t fontSize=30  -p 18101 -t disableLeaveAlert=true -- /bin/zsh -il
+
+  x-glue: &GLUE
+    image: glue
+    cap_add:
+      - NET_ADMIN
+    build: 
+      dockerfile: fedora-glue.Dockerfile
+      context: ./docker
+    tty: false
+    hostname: glue
+    working_dir: /etc/wireguard
+    ports: 
+      - 8888:8888/tcp # HTTP proxy
+      - 8388:8388/tcp # Shadowsocks
+      - 8388:8388/udp # Shadowsocks
+    privileged: true
+    volumes:
+      - ./wireguard:/gluetun
+    environment:
+      - VPN_TYPE=wireguard
+      - VPNSP=custom
+      - WIREGUARD_ENDPOINT_IP=1.2.3.4
+      - WIREGUARD_ENDPOINT_PORT=51820
+      - WIREGUARD_PUBLIC_KEY=wAUaJMhAq3NFutLHIdF8AN0B5WG8RndfQKLPTEDHal0=
+      - WIREGUARD_PRIVATE_KEY=wOEI9rqqbDwnN8/Bpp22sVz48T71vJ4fYmFWujulwUU=
+      - WIREGUARD_PRESHARED_KEY=wOEI9rqqbDwnN8/Bpp22sVz48T71vJ4fYmFWujulwUU=
+      - WIREGUARD_ADDRESS=10.64.222.21/32
+      - TZ=
+
 
   x-pueued: &PUEUED
     tty: false
@@ -146,18 +175,24 @@ x-disabledservices:
     working_dir: /root/.config/pueue
     command: /usr/bin/pueued -c /root/.config/pueue/pueue.yml -vv
 
+  XXXXXXXXXXX:
+    restic-rest-server: *RESTIC-REST-SERVER
+    webhook: *WEBHOOK
+    ttyd: *TTYD
+    sched: *SCHED
+    iodined: *IODINED
+    gottyd: *GOTTYD
+    pueued: *PUEUED
+    pueued: *PUEUED
+
+
+
 services:
-  restic-rest-server: *RESTIC-REST-SERVER
-  webhook: *WEBHOOK
-  ttyd: *TTYD
-  sched: *SCHED
-  iodined: *IODINED
-  gottyd: *GOTTYD
-  pueued: *PUEUED
+  glue: *GLUE
 
 
 
-x-services:   
+
 
 
 

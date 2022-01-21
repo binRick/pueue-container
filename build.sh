@@ -6,9 +6,17 @@ DISTRO=${DISTRO:-fedora}
 CM=${CM:-docker}
 #command -v yaml2json >/dev/null || pip3 install json2yaml
 
+
 tf=.$DISTRO-container-compose.yaml
 
 ( ./render_container_compose.sh 2>&1 | tee $tf ) 2>/dev/null
+
+
+
+\cat $tf|yaml2json|jq '.services' | jq keys
+
+
+
 
 bc="$CM-compose --ansi always  -f $tf build --progress=tty --pull --force-rm"
 ansi --magenta --underline --italic "$bc"
