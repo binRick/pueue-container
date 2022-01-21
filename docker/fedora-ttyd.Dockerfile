@@ -9,4 +9,5 @@ RUN dnf -y install openssl openssl-devel
 RUN dnf -y install json-c-devel json-parser-devel jsoncpp-devel libfastjson-devel
 
 RUN cmake . && make -j
-RUN ls
+RUN cp ttyd /usr/bin/ttyd
+
