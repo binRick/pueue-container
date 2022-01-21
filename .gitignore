@@ -5,3 +5,5 @@ bin/docker
 bin/docker-compose
 .*.yaml
 data
+iodine-0.7.0
+v0.7.0.tar.gz

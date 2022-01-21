@@ -17,9 +17,11 @@ x-vars:
   BRB: &BRB
     dockerfile: *RMG
     context: .
+
   BIM: &BIM
     dockerfile: *IMG
     context: .
+
   ALPINE: &ALPINE
     dns: *DNS
     build: 
@@ -27,7 +29,6 @@ x-vars:
       context: .
     environment:
      - *PATH
-    restart: always
     working_dir: /root/.config
 
   FEDORA: &FEDORA
@@ -39,63 +40,58 @@ x-vars:
       context: ./docker
     environment:
      - *PATH
-    restart: always
     working_dir: /root/.config
 
 x-disabledservices:
   SCHED: &SCHED
     tty: false
-    hostname: scheduler0
-    image: *IMG
+    hostname: sched0
+    image: fedora-pueue
     build:
-      dockerfile: fedora.Dockerfile
+      dockerfile: fedora-pueue.Dockerfile
       context: ./docker
-    dns: *DNS
     volumes:
       - ./docker/files/net-pueue.yml:/root/.config/pueue/pueue.yml
-    restart: always
     working_dir: /root/.config/pueue
-    command: sh -c "while :; do date; /bin/pueue status; sleep 5; done"
+    command: sh -c "while :; do date; sleep 5; done"
 
-  WEBHOOK: &WEBHOOK
+  x-webhook: &WEBHOOK
     tty: false
     hostname: webhook0
-    image: *IMG
+    image: fedora-pueue
     build:
-      dockerfile: fedora.Dockerfile
+      dockerfile: fedora-pueue.Dockerfile
       context: ./docker
-    dns: *DNS
     ports: 
       - 35001:8000
     volumes:
       - ./files/webhook_server.yml:/root/.config/webhook_server.yml
       - /tmp/pueued.sock:/root/.local/share/pueue/pueue.socket
     working_dir: /root/.config
-    command: /bin/webhookserver
+    command: /usr/bin/webhookserver
 
-  PUEUED: &PUEUED
+  x-pueued: &PUEUED
     tty: false
-    image: fedora-p
+    hostname: pueued0
+    image: fedora-pueue
     build:
-      dockerfile: fedora.Dockerfile
+      dockerfile: fedora-pueue.Dockerfile
       context: ./docker
     ports: 
       - "15002:6924"
     volumes:
       - ./docker/files/pueue.yml:/root/.config/pueue/pueue.yml
       - /tmp/pueued.sock:/root/.local/share/pueue/pueue.socket
-    restart: always
     working_dir: /root/.config/pueue
-#    command: sleep 666 
-    command: /usr/bin/pueued -vv -c /root/.config/pueue/pueue.yml
+    command: /usr/bin/pueued -c /root/.config/pueue/pueue.yml -vv
 
 
-  RESTIC: &RESTIC
+  x-restic-rest-server: &RESTIC-REST-SERVER
     tty: false
-    hostname: restic0
-    image: fedora-restic
+    hostname: restic-rest-server
+    image: restic-rest-server
     build:
-      dockerfile: fedora.Dockerfile
+      dockerfile: fedora-restic.Dockerfile
       context: ./docker
     dns: *DNS
     ports: 
@@ -122,9 +118,11 @@ x-disabledservices:
      - IODINED_PASS=4b4f41eb-85e8-4006-9644-13a4f378e830
 
 services:
-  pueued0: *PUEUED
-  restic0: *RESTIC
-  iodined0: *IODINED
+  sched: *SCHED
+  pueued: *PUEUED
+  restic-rest-server: *RESTIC-REST-SERVER
+  iodined: *IODINED
+  webhook: *WEBHOOK
 
 
 
