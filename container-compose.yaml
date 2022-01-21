@@ -95,7 +95,7 @@ x-disabledservices:
   RESTIC: &RESTIC
     tty: false
     hostname: restic0
-    image: docker.io/restic/rest-server
+    image: fedora-restic
     build:
       dockerfile: fedora.Dockerfile
       context: ./docker
@@ -103,7 +103,7 @@ x-disabledservices:
     ports: 
       - 35005:8000
     working_dir: /root
-    command:  rest-server --no-auth --path /data
+    command: /usr/bin/rest-server --no-auth --path /data
     volumes:
       - ./data:/data
 
@@ -123,11 +123,9 @@ x-iodined: &IODINED
      - *PATH
     restart: always
     working_dir: /root/
-#    command: ls /bin/
-    command: /bin/iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net
+    command: sh -c 'ls /bin/iodined*'
+#    command: /bin/iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 t2.dtun.vpntech.net
 #    command: sleep 666 
-    volumes:
-      - *CG
 
 services:
   restic0: 

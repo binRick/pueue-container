@@ -10,6 +10,6 @@ tf=.$DISTRO-docker-compose.yaml
 
 ./render_container_compose.sh 2>&1 | tee $tf
 
-cmd="$CM-compose -f $tf build"
+cmd="$CM-compose -f $tf pull && $CM-compose -f $tf build"
 ansi --yellow --italic "$cmd"
 eval "$cmd"

@@ -15,13 +15,13 @@ FROM alpine-base-pkgs as alpine-compiler-pkgs
 RUN apk add make cmake gcc automake autoconf
 
 FROM alpine-base-pkgs as alpine-iodine
-
 ADD files/iodine-0.7.0.tar.gz /
 WORKDIR /iodine-0.7.0
 RUN apk add zlib-dev automake gcc autoconf make libgsf-dev dev86 libc-dev musl-dev
 RUN make
 RUN cp bin/iodine /bin/iodine
 RUN cp bin/iodined /bin/iodined
+RUN ls /bin/iodine /bin/iodined
 
 FROM alpine:3.14 as alpine-webhookserver
 RUN mkdir -p /root/.config
@@ -67,5 +67,8 @@ RUN chown root:root /root/.config/pueue/pueue.yml
 
 
 
-FROM alpine-base-pkgs as alpine-restic
+FROM alpine-base-pkgs as alpine-restic1
 RUN apk add restic
+
+FROM docker.io/restic/rest-server as alpine-restic
+RUN ls /
