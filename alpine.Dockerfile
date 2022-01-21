@@ -61,3 +61,5 @@ EXPOSE 8000
 
 
 
+FROM alpine-base-pkgs as alpine-restic
+RUN apk add restic

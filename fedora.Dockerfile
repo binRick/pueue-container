@@ -77,7 +77,7 @@ RUN dnf -y install zsh tmux
 RUN dnf -y install net-tools
 
 
-FROM base-pkgs as restic
+FROM base-pkgs as fedora-restic
 RUN dnf -y install zsh tmux rsync git
 RUN dnf -y install net-tools
 RUN dnf -y install restic
