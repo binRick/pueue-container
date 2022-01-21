@@ -74,9 +74,7 @@ x-disabledservices:
     command: /bin/webhookserver
 
   PUEUED: &PUEUED
-    tty: no
-    hostname: pueued0
-    image: *IMG
+    tty: false
     build:
       dockerfile: fedora.Dockerfile
       context: ./docker
@@ -88,8 +86,8 @@ x-disabledservices:
       - /tmp/pueued.sock:/root/.local/share/pueue/pueue.socket
     restart: always
     working_dir: /root/.config/pueue
-    command: sleep 666 
- #   command: /bin/pueued -vv -c /root/.config/pueue/pueue.yml
+#    command: sleep 666 
+    command: /usr/bin/pueued -vv -c /root/.config/pueue/pueue.yml
 
 
   RESTIC: &RESTIC
@@ -122,14 +120,11 @@ x-disabledservices:
     environment:
      - *PATH
      - IODINED_PASS=4b4f41eb-85e8-4006-9644-13a4f378e830
-#    command: sh -c 'ls /bin/iodined*'
-#  pueued0: *PUEUED
-#  r0: *RESTIC
-#    command: sleep 666 
 
 services:
-  restic0: *RESTIC
-  iodined0: *IODINED
+  pueued0: *PUEUED
+#  restic0: *RESTIC
+#  iodined0: *IODINED
 
 
 
