@@ -131,6 +131,18 @@ x-disabledservices:
     command: /usr/bin/ttyd -t fontSize=30  -p 18105 -t disableLeaveAlert=true -- sh
     #entrypoint: /usr/bin/ttyd -t fontSize=30  -p 18101 -t disableLeaveAlert=true -- /bin/zsh -il
 
+  x-glue-c1: &GC1
+    image: fedora-client
+    build: 
+      dockerfile: fedora-client.Dockerfile
+      context: ./docker
+    privileged: no
+    tty: yes
+    working_dir: /root
+    network_mode: "service:glue"
+    depends_on:
+      - glue
+
   x-glue: &GLUE
     image: glue
     privileged: yes
@@ -143,7 +155,7 @@ x-disabledservices:
     hostname: glue
     working_dir: /etc/wireguard
     ports: 
-      - 18883:18883/tcp # HTTP proxy
+      - 35501:35501/tcp
     volumes:
       - ./wireguard:/gluetun
     environment:
@@ -159,7 +171,10 @@ x-disabledservices:
       - TZ=
       - HTTPPROXY=on
       - HTTPPROXY_LOG=on
+      - HTTPPROXY_STEALTH=off
+      - HTTPPROXY_PORT=35501
       - FIREWALL_OUTBOUND_SUBNETS=192.168.1.0/24
+      - FIREWALL_VPN_INPUT_PORTS=55101,55102
       #-HTTPPROXY_USER 
       #-HTTPPROXY_PASSWORD 
 
@@ -192,6 +207,7 @@ x-disabledservices:
 
 services:
     glue: *GLUE
+    gc1: *GC1
 
 
 

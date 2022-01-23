@@ -1,3 +1,2 @@
 FROM docker.io/qmcgaw/gluetun as glue
-RUN ls /
-#ENTRYPOINT /t.sh
+RUN apk add curl bash zsh sudo git rsync socat wget httpie openssl
