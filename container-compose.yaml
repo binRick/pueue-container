@@ -91,7 +91,7 @@ x-disabledservices:
       dockerfile: fedora-iodine.Dockerfile
       context: ./docker
     ports: 
-      - "54:53/udp"
+      - "53:53/udp"
     restart: always
     working_dir: /root/
     command: /usr/bin/iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 {{DTUN}}
@@ -205,7 +205,6 @@ x-disabledservices:
 
   XXXXXXXXXXX:
 
-    iodined: *IODINED
     webhook: *WEBHOOK
     sched: *SCHED
     pueued: *PUEUED
@@ -216,11 +215,13 @@ x-disabledservices:
     ttyd: *TTYD
 
     restic-rest-server: *RESTIC-REST-SERVER
-services:
 
     gc0: *GC0
     glue: *GLUE
     gc1: *GC1
+services:
+    iodined: *IODINED
+
 
 
 
