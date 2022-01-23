@@ -210,19 +210,19 @@ x-disabledservices:
     sched: *SCHED
     pueued: *PUEUED
 
-    glue: *GLUE
-    gc1: *GC1
-
-services:
-
-    gc0: *GC0
-
 
     gottyd: *GOTTYD
 
     ttyd: *TTYD
 
     restic-rest-server: *RESTIC-REST-SERVER
+services:
+
+    gc0: *GC0
+    glue: *GLUE
+    gc1: *GC1
+
+
 
 
 
