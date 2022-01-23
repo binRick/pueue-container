@@ -91,7 +91,7 @@ x-disabledservices:
       dockerfile: fedora-iodine.Dockerfile
       context: ./docker
     ports: 
-      - "53:53/udp"
+      - "53001:53/udp"
     restart: always
     working_dir: /root/
     command: /usr/bin/iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 {{DTUN}}
