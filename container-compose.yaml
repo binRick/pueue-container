@@ -131,6 +131,15 @@ x-disabledservices:
     command: /usr/bin/ttyd -t fontSize=30  -p 18105 -t disableLeaveAlert=true -- sh
     #entrypoint: /usr/bin/ttyd -t fontSize=30  -p 18101 -t disableLeaveAlert=true -- /bin/zsh -il
 
+  x-glue-c0: &GC0
+    image: fedora-client
+    build: 
+      dockerfile: fedora-client.Dockerfile
+      context: ./docker
+    privileged: no
+    tty: yes
+    working_dir: /root
+
   x-glue-c1: &GC1
     image: fedora-client
     build: 
@@ -208,6 +217,7 @@ x-disabledservices:
 services:
     glue: *GLUE
     gc1: *GC1
+    gc0: *GC0
 
 
 
