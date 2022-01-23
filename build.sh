@@ -4,8 +4,9 @@ source .envrc
 git pull||git pull
 DISTRO=${DISTRO:-fedora}
 CM=${CM:-docker}
-#command -v yaml2json >/dev/null || pip3 install json2yaml
-
+command -v yaml2json >/dev/null || pip3 install json2yaml
+command -v j2 >/dev/null || pip3 install j2cli
+source .envrc
 
 tf=.$DISTRO-container-compose.yaml
 
