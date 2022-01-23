@@ -245,6 +245,7 @@ faint ansi::faint ansi::normal
 italic ansi::italic ansi::plain
 fraktur ansi::fraktur ansi::plain
 underline ansi::underline ansi::noUnderline
+curly-underline ansi::curlyUnderline ansi::noUnderline
 double-underline ansi::doubleUnderline ansi::noUnderline
 blink ansi::blink ansi::noBlink
 rapid-blink ansi::rapidBlink ansi::noBlink
@@ -540,11 +541,11 @@ ansi::repeat() {
 ansi::report() {
     local buff c report
 
-    report=""
-
-    # Note: read bypass piping, which lets this work:
+    # Write to stderr to bypass piping, which lets this work:
     # ansi --report-window-chars | cut -d , -f 1
-    read -p "$ANSI_CSI$1" -r -N "${#2}" -s -t 1 buff
+    printf "%s%s" "$ANSI_CSI" "$1" >&2
+    report=""
+    read -r -N "${#2}" -s -t 1 buff
 
     if [ "$buff" != "$2" ]; then
         return 1
@@ -665,11 +666,11 @@ ansi::scrollUp() {
     printf '%s%sS' "$ANSI_CSI" "${1-}"
 }
 
-ansi::icon() {
+ansi::setIcon() {
     printf '%s1;%s%s' "$ANSI_OSC" "${1-}" "$ANSI_ST"
 }
 
-ansi::title() {
+ansi::setTitle() {
     printf '%s2;%s%s' "$ANSI_OSC" "${1-}" "$ANSI_ST"
 }
 
@@ -738,7 +739,7 @@ Text:
     Attributes:
         --bold, --faint, --normal
         --italic, --fraktur, --plain
-        --underline, --double-underline, --no-underline
+        --underline, --curly-underline, --double-underline, --no-underline
         --blink, --rapid-blink, --no-blink
         --inverse, --no-inverse
         --invisible, --visible
@@ -806,7 +807,9 @@ ansi::tabBackward() {
 ansi::tabForward() {
     printf '%s%sI' "$ANSI_CSI" "${1-}"
 }
-
+ansi::curlyUnderline() {
+    printf '%s4:3m' "$ANSI_CSI"
+}
 ansi::underline() {
     printf '%s4m' "$ANSI_CSI"
 }
@@ -1092,6 +1095,12 @@ ansi() {
                 $supported && ansi::italic
                 restoreText=true
                 m23="23;"
+                ;;
+
+            --curly-underline)
+                $supported && ansi::curlyUnderline
+                restoreText=true
+                m24="24;"
                 ;;
 
             --underline)
@@ -1552,19 +1561,19 @@ ansi() {
                 ;;
 
             --icon)
-                $supported && ansi::icon ""
+                $supported && ansi::setIcon ""
                 ;;
 
             --icon=*)
-                $supported && ansi::icon "${1#*=}"
+                $supported && ansi::setIcon "${1#*=}"
                 ;;
 
             --title)
-                $supported && ansi::title ""
+                $supported && ansi::setTitle ""
                 ;;
 
             --title=*)
-                $supported && ansi::title "${1#*=}"
+                $supported && ansi::setTitle "${1#*=}"
                 ;;
 
             --no-restore)
@@ -1600,9 +1609,9 @@ ansi() {
     done
 
     printf '%s' "${1-}"
+    shift || :
 
-    if [[ "$#" -gt 1 ]]; then
-        shift || :
+    if [[ "$#" -gt 0 ]]; then
         printf "${IFS:0:1}%s" "${@}"
     fi
 
