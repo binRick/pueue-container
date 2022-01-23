@@ -210,10 +210,11 @@ x-disabledservices:
     sched: *SCHED
     pueued: *PUEUED
 
-services:
-
     glue: *GLUE
     gc1: *GC1
+
+services:
+
     gc0: *GC0
 
 
