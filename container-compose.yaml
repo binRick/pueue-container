@@ -204,22 +204,24 @@ x-disabledservices:
     command: /usr/bin/pueued -c /root/.config/pueue/pueue.yml -vv
 
   XXXXXXXXXXX:
-    ttyd: *TTYD
-    gottyd: *GOTTYD
-    restic-rest-server: *RESTIC-REST-SERVER
-    webhook: *WEBHOOK
-    sched: *SCHED
-    pueued: *PUEUED
 
+
+services:
+    iodined: *IODINED
 
     glue: *GLUE
     gc1: *GC1
     gc0: *GC0
 
-services:
-    iodined: *IODINED
 
+    ttyd: *TTYD
+    gottyd: *GOTTYD
 
+    restic-rest-server: *RESTIC-REST-SERVER
+
+    webhook: *WEBHOOK
+    sched: *SCHED
+    pueued: *PUEUED
 
 
 
