@@ -94,12 +94,12 @@ x-disabledservices:
       - "54:53/udp"
     restart: always
     working_dir: /root/
-    command: /usr/bin/iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 n0.dtun.vpnservice.company
+    command: /usr/bin/iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 {{DTUN}}
     environment:
      - *PATH
-     - IODINED_PASS=4b4f41eb-85e8-4006-9644-13a4f378e830
-    depends_on:
-      - "webhook"    
+     - IODINED_PASS={{IODINE_PASS}}
+    depends_on: []
+#      - "webhook"    
 
   x-gottyd: &GOTTYD
     tty: false
@@ -209,15 +209,15 @@ x-disabledservices:
     restic-rest-server: *RESTIC-REST-SERVER
     webhook: *WEBHOOK
     sched: *SCHED
-    iodined: *IODINED
     pueued: *PUEUED
 
 
-
-services:
     glue: *GLUE
     gc1: *GC1
     gc0: *GC0
+
+services:
+    iodined: *IODINED
 
 
 
