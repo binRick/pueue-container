@@ -1,8 +1,9 @@
 #!/bin/bash
 set -eou pipefail
-I=$1;shift
+I=$1
+shift
 cmd="${@:-ls /etc}"
 
 cmd="docker run --rm -it $I $cmd"
->&2 ansi --yellow --italic "$cmd"
+ansi >&2 --yellow --italic "$cmd"
 eval "$cmd"

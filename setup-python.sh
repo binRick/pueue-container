@@ -1,6 +1,6 @@
 VENV_DIR=${VENV_DIR:-~/.venv-pueue}
 if [[ ! -f $VENV_DIR/bin/activate ]]; then
-  python3 -m venv $VENV_DIR
+	python3 -m venv $VENV_DIR
 fi
 source $VENV_DIR/bin/activate
 
