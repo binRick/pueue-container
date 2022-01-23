@@ -181,10 +181,6 @@ x-disabledservices:
 
   XXXXXXXXXXX:
     ttyd: *TTYD
-
-
-services:
-    glue: *GLUE
     gottyd: *GOTTYD
     restic-rest-server: *RESTIC-REST-SERVER
     webhook: *WEBHOOK
@@ -192,6 +188,10 @@ services:
     iodined: *IODINED
     pueued: *PUEUED
 
+
+
+services:
+    glue: *GLUE
 
 
 
