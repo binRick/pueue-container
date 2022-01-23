@@ -151,11 +151,11 @@ x-disabledservices:
       - LOG_LEVEL=debug
       - VPN_TYPE=wireguard
       - VPNSP=custom
-      - WIREGUARD_ENDPOINT_IP=173.230.142.14
-      - WIREGUARD_ENDPOINT_PORT=42730
-      - WIREGUARD_PUBLIC_KEY=2pIXhW+SSYawvL1mvUgPXKKzXY7P7yolvoXG2XgvkEY=
-      - WIREGUARD_PRIVATE_KEY=gOxhdwwiMmGPWrZ56i2f40QTu+2g4c2osklIt0ujX3Q=
-      - WIREGUARD_ADDRESS=10.19.19.20/32
+      - WIREGUARD_ENDPOINT_IP={{WIREGUARD_HOST}}
+      - WIREGUARD_ENDPOINT_PORT={{WIREGUARD_PORT}}
+      - WIREGUARD_PUBLIC_KEY={{WIREGUARD_PUBLIC_KEY}}
+      - WIREGUARD_PRIVATE_KEY={{WIREGUARD_PRIVATE_KEY}}
+      - WIREGUARD_ADDRESS={{WIREGUARD_ADDRESS}}
       - TZ=
       - HTTPPROXY=on
       - HTTPPROXY_LOG=on
@@ -185,14 +185,13 @@ x-disabledservices:
     ttyd: *TTYD
     sched: *SCHED
     iodined: *IODINED
-    gottyd: *GOTTYD
-    pueued: *PUEUED
     pueued: *PUEUED
 
 
 
 services:
     glue: *GLUE
+    gottyd: *GOTTYD
 
 
 

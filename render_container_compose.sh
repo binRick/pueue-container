@@ -6,6 +6,16 @@ if [[ "$DISTRO" == fedora ]]; then
 else
   cmd="command cat container-compose.yaml|sed 's/fedora/$DISTRO/g'|yaml2json 2>/dev/null|json2yaml"
 fi
-#eval "$cmd"
-#cmd="command cat container-compose.yaml|sed 's/fedora.Dockerfile/$DISTRO.Dockerfile/g'|sed 's/fedora-/$DISTRO-/g'|yaml2json 2>/dev/null|json2yaml"
-eval "$cmd"
+
+tf=$(mktemp)
+tf1=$(mktemp)
+eval "$cmd" > $tf
+
+j2_cmd="j2 -f env -o $tf1 $tf"
+eval $j2_cmd
+
+
+
+cat $tf1
+unlink $tf 
+unlink $tf1
