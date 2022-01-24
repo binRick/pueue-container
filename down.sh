@@ -5,6 +5,6 @@ shift || true
 N=$DISTRO-c0
 cmd="${@:-ls /etc}"
 
-cmd="docker-compose -f container-compose.yaml down"
+cmd="docker-compose -f container-compose.yaml down --remove-orphans"
 ansi >&2 --yellow --italic "$cmd"
 eval "$cmd"

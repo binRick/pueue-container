@@ -83,6 +83,23 @@ x-disabledservices:
     volumes:
       - ./data:/data
 
+  x-iodine0: &IO0
+    privileged: yes
+    tty: false
+    image: fedora-iodine
+    build: 
+      dockerfile: fedora-iodine.Dockerfile
+      context: ./docker
+    restart: always
+    working_dir: /root/
+    environment:
+     - *PATH
+     - IODINE_PASS={{IODINE_PASS}}
+     - DTUN_DOMAIN=io0.{{DTUN}}
+     - DTUN_DEVICE=dnsc0
+    entrypoint: /iodine.sh
+    depends_on: []
+
   x-iodined: &IODINED
     privileged: yes
     tty: false
@@ -98,10 +115,11 @@ x-disabledservices:
      - *PATH
      - IODINED_PASS={{IODINE_PASS}}
      - DTUN_DOMAIN={{DTUN}}
-     - DTUN_DEVICE=dns01
+     - DTUN_DEVICE=dnsh0
      - DTUN_PORT=53
      - DTUN_CIDR=10.232.229.0/24
     depends_on: []
+    entrypoint: /iodined.sh
 #      - "webhook"    
 
   x-gottyd: &GOTTYD
@@ -222,8 +240,9 @@ x-disabledservices:
     gc0: *GC0
     glue: *GLUE
     gc1: *GC1
-services:
     iodined: *IODINED
+services:
+    io0: *IO0
 
 
 
