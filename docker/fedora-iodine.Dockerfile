@@ -12,4 +12,6 @@ FROM fedora:35 as fedora-iodine
 RUN dnf -y install net-tools zsh tmux bash
 COPY --from=iodine-builder /iodine /bin/iodine
 COPY --from=iodine-builder /iodined /bin/iodined
-
+COPY iodined-entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT /entrypoint.sh

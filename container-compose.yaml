@@ -94,10 +94,13 @@ x-disabledservices:
       - "53:53/udp"
     restart: always
     working_dir: /root/
-    command: /usr/bin/iodined -d dns0 -p 53 -f -c -i 300 10.232.229.0/24 {{DTUN}}
     environment:
      - *PATH
      - IODINED_PASS={{IODINE_PASS}}
+     - DTUN_DOMAIN={{DTUN}}
+     - DTUN_DEVICE=dns01
+     - DTUN_PORT=53
+     - DTUN_CIDR=10.232.229.0/24
     depends_on: []
 #      - "webhook"    
 
