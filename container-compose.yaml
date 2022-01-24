@@ -228,9 +228,6 @@ x-disabledservices:
 
     webhook: *WEBHOOK
     sched: *SCHED
-    pueued: *PUEUED
-
-
     gottyd: *GOTTYD
 
     ttyd: *TTYD
@@ -241,8 +238,9 @@ x-disabledservices:
     glue: *GLUE
     gc1: *GC1
     iodined: *IODINED
-services:
     io0: *IO0
+services:
+    pueued: *PUEUED
 
 
 

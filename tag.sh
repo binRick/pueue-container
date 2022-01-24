@@ -7,4 +7,5 @@ set -x
 #docker tag localhost/pueue:latest docker.io/vpntechdockerhub/pueue:latest
 #docker tag pueue docker.io/vpntechdockerhub/pueue:latest
 
-docker push docker.io/vpntechdockerhub/pueue:latest
+#docker push docker.io/vpntechdockerhub/pueue:latest
+docker tag alpine-pueue:latest docker.io/vpntechdockerhub/pueue:alpine
