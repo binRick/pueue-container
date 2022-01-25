@@ -209,6 +209,21 @@ x-disabledservices:
       #-HTTPPROXY_PASSWORD 
 
 
+  x-guard: &GUARD
+    tty: false
+    hostname: guard
+    image: fedora-guard
+    build:
+      dockerfile: fedora-guard.Dockerfile
+      context: ./docker
+    ports: 
+      - "35001:35001"
+    volumes:
+      - /dev/net/tun:/dev/net/tun
+    working_dir: /etc/wireguard
+#    command: /usr/bin/pueued -c /root/.config/pueue/pueue.yml -vv
+
+        
   x-pueued: &PUEUED
     tty: false
     hostname: pueued
@@ -235,14 +250,14 @@ x-disabledservices:
     gc1: *GC1
     io0: *IO0
 
-services:
     iodined: *IODINED
     pueued: *PUEUED
     restic-rest-server: *RESTIC-REST-SERVER
     ttyd: *TTYD
     gottyd: *GOTTYD
 
-
+services:
+    guard: *GUARD
 
 
 
