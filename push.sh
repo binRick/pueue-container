@@ -9,3 +9,4 @@ docker push docker.io/vpntechdockerhub/pueue:$DISTRO-restic
 docker push docker.io/vpntechdockerhub/pueue:$DISTRO-ttyd
 docker push docker.io/vpntechdockerhub/pueue:$DISTRO-gottyd
 docker push docker.io/vpntechdockerhub/pueue:$DISTRO-iodine
+docker push docker.io/vpntechdockerhub/pueue:$DISTRO-guard
