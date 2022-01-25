@@ -208,6 +208,32 @@ x-disabledservices:
       #-HTTPPROXY_USER 
       #-HTTPPROXY_PASSWORD 
 
+  x-guardserver: &GUARDSERVER
+    tty: false
+    hostname: guardserver
+    image: fedora-guardserver
+    build:
+      dockerfile: fedora-guard.Dockerfile
+      context: ./docker
+    volumes:
+      - /dev/net/tun:/dev/net/tun
+    working_dir: /etc/wireguard
+    sysctls:
+     - net.ipv4.ip_forward=1
+    environment:
+     - WG_COLOR_MODE=always
+     - LOG_LEVEL=debug
+     - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+     - LISTEN_HOST=127.0.0.1
+     - LISTEN_PORT=59222     
+    privileged: yes
+    ports:
+      - 59222:59222/tcp
+      - 59300:59300/udp
+      - 59301:59301/udp
+      - 59302:59302/udp
+      - 59303:59303/udp
+      - 59304:59304/udp    
 
   x-guard: &GUARD
     tty: false
@@ -228,6 +254,7 @@ x-disabledservices:
      - LOG_LEVEL=debug
      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     privileged: yes
+    command: /usr/bin/guard --debug server
 #    command: /usr/bin/pueued -c /root/.config/pueue/pueue.yml -vv
 
         
