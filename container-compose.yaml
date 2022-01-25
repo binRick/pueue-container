@@ -232,7 +232,6 @@ x-disabledservices:
 
     ttyd: *TTYD
 
-    restic-rest-server: *RESTIC-REST-SERVER
 
     gc0: *GC0
     glue: *GLUE
@@ -241,6 +240,7 @@ x-disabledservices:
     io0: *IO0
 services:
     pueued: *PUEUED
+    restic-rest-server: *RESTIC-REST-SERVER
 
 
 
