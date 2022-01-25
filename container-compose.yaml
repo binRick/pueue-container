@@ -226,21 +226,21 @@ x-disabledservices:
 
   XXXXXXXXXXX:
 
-    webhook: *WEBHOOK
     sched: *SCHED
-    gottyd: *GOTTYD
 
-
+    webhook: *WEBHOOK
 
     gc0: *GC0
     glue: *GLUE
     gc1: *GC1
     iodined: *IODINED
     io0: *IO0
+
 services:
     pueued: *PUEUED
     restic-rest-server: *RESTIC-REST-SERVER
     ttyd: *TTYD
+    gottyd: *GOTTYD
 
 
 
