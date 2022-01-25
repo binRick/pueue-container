@@ -28,3 +28,4 @@ COPY files/pueue.yml /root/.config/pueue/pueue.yml
 COPY --from=fedora-binaries /pueue /bin/pueue
 COPY --from=fedora-binaries /pueued /bin/pueued
 RUN chmod 0700 /bin/pueue /bin/pueued
+RUN dnf -y install ansible

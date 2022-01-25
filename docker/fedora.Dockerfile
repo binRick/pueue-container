@@ -44,6 +44,8 @@ COPY files/pueue.yml /root/.config/pueue/pueue.yml
 COPY --from=fedora-binaries /pueue /bin/pueue
 COPY --from=fedora-binaries /pueued /bin/pueued
 RUN chmod 0700 /bin/pueue /bin/pueued
+RUN dnf -y install ansible openssh-clients
+RUN dnf list > /.dnf
 #COPY --from=fedora-binaries /webhookserver /bin/.
 #COPY --from=iodine-builder /iodine /bin/.
 #COPY --from=iodine-builder /iodined /bin/.

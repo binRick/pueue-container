@@ -257,16 +257,16 @@ x-disabledservices:
     gc1: *GC1
     io0: *IO0
 
+    guard: *GUARD
     iodined: *IODINED
-    pueued: *PUEUED
     restic-rest-server: *RESTIC-REST-SERVER
     ttyd: *TTYD
     gottyd: *GOTTYD
 
+
+
 services:
-    guard: *GUARD
-
-
+    pueued: *PUEUED
 
 
 
