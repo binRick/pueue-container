@@ -11,7 +11,7 @@ RUN apk add rsync git socat ansible wget \
             curl wireguard-tools httpie bash \
             podman-remote docker-compose \
             openssh-client zsh bash sudo \
-            ripgrep vim openssh-client 
+            ripgrep vim openssh-client jq
 
 RUN apk list > /.apk
 SHELL ["/bin/zsh"]
