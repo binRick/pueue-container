@@ -221,6 +221,13 @@ x-disabledservices:
     volumes:
       - /dev/net/tun:/dev/net/tun
     working_dir: /etc/wireguard
+    sysctls:
+     - net.ipv4.ip_forward=1
+    environment:
+     - WG_COLOR_MODE=always
+     - LOG_LEVEL=debug
+     - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    privileged: yes
 #    command: /usr/bin/pueued -c /root/.config/pueue/pueue.yml -vv
 
         
