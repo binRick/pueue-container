@@ -230,7 +230,6 @@ x-disabledservices:
     sched: *SCHED
     gottyd: *GOTTYD
 
-    ttyd: *TTYD
 
 
     gc0: *GC0
@@ -241,6 +240,7 @@ x-disabledservices:
 services:
     pueued: *PUEUED
     restic-rest-server: *RESTIC-REST-SERVER
+    ttyd: *TTYD
 
 
 
