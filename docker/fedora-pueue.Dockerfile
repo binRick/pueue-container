@@ -41,5 +41,8 @@ RUN dnf -y install nagios-plugins-tcp nagios-plugins-ssh nagios-plugins-ping nag
 RUN dnf -y remove audit
 
 RUN dnf -y install golang
-RUN go install github.com/DarthSim/overmind/v2@latest
+
 RUN env GO111MODULE=on go install github.com/DarthSim/hivemind@latest
+RUN mv /root/go/bin/hivemind /usr/bin/hivemind
+COPY files/Procfile /.Procfile
+COPY files/hivemind.env /etc/profile.d/hivemind.sh
