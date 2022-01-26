@@ -308,7 +308,6 @@ x-disabledservices:
 
 services:
     pueued: *PUEUED
-    wgrest: *WGREST
 
 
 
