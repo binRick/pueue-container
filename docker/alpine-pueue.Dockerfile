@@ -1,6 +1,5 @@
 # syntax = edrevo/dockerfile-plus
 
-
 FROM alpine:3.14 as alpine-pueue-img
 
 RUN mkdir -p /root/.config/pueue
@@ -48,3 +47,5 @@ COPY files/webhookserver-linux-amd64-v0.1.4 /usr/bin/webhookserver
 COPY files/webhook_server.yml /root/.config/webhook_server.yml
 
 COPY --from=alpine-guard-builder /guard /usr/bin/guard
+
+INCLUDE+ resolvers.Dockerfile
