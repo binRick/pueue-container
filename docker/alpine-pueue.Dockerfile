@@ -16,7 +16,8 @@ RUN apk add rsync git socat ansible wget \
             nagios-plugins-dig nagios-plugins-fping \
             nagios-plugins-http nagios-plugins-dns nagios-plugins-by_ssh \
             nagios-plugins-ping nagios-plugins-ssl_validity nagios-plugins-icmp
-RUN apk add ansible-base-doc
+RUN apk add ansible-base-doc go
+RUN go install github.com/DarthSim/overmind/v2@latest
 
 RUN apk list > /.apk
 SHELL ["/bin/zsh"]
@@ -27,3 +28,4 @@ FROM alpine-pueue-img as alpine-pueue
 
 COPY files/webhookserver-linux-amd64-v0.1.4 /usr/bin/webhookserver
 COPY files/webhook_server.yml /root/.config/webhook_server.yml
+
