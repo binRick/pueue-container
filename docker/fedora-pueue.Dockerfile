@@ -59,8 +59,12 @@ RUN mkdir -p ~/.config/shox
 COPY files/shox.conf ~/.config/shox/config.yaml
 
 INCLUDE+ fedora-guard.Dockerfile
+INCLUDE+ fedora-netns-exec.Dockerfile
+
 FROM fedora-pueue-dev as fedora-pueue
 COPY --from=fedora-guard-builder /guard /usr/bin/guard
+COPY --from=fedora-netns-exec /netns-exec /usr/bin/netns-exec
+COPY --from=fedora-netns-exec /netns-exec-dbus /usr/bin/netns-exec-dbus
 
 COPY files/titun-x86_64-linux /usr/bin/titun
 RUN chmod +x /usr/bin/titun
