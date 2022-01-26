@@ -36,3 +36,4 @@ RUN sh -c 'dnf -y remove ansible*'
 RUN dnf -y install python3-pip
 RUN pip3 install ansible -U
 RUN ansible --version
+RUN dnf -y install nagios-plugins-tcp nagios-plugins-ssh nagios-plugins-ping nagios-plugins-http nagios-plugins-fping nagios-plugins-dns nagios-plugins-dig nagios-plugins-by_ssh
