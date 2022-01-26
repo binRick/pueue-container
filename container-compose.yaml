@@ -132,25 +132,13 @@ x-disabledservices:
       - "18105:18105/tcp"
     restart: always
     working_dir: /root/
-    command: sleep 666 #/usr/bin/gotty /bin/sh
+    command: /usr/bin/ttyd -p 49111 -T xterm-256color -m 1 zsh -l
     environment:
      - GOTTY_PERMIT_WRITE=1
      - GOTTY_PORT=19501 
      - GOTTY_RECONNECT=1 
      - GOTTY_RECONNECT_TIME=5 
 
-  x-ttyd: &TTYD
-    tty: false
-    image: fedora-ttyd
-    build: 
-      dockerfile: fedora-ttyd.Dockerfile
-      context: ./docker
-    ports: 
-      - "18106:18106/tcp"
-    restart: always
-    working_dir: /root/
-    command: /usr/bin/ttyd -t fontSize=30  -p 18105 -t disableLeaveAlert=true -- sh
-    #entrypoint: /usr/bin/ttyd -t fontSize=30  -p 18101 -t disableLeaveAlert=true -- /bin/zsh -il
 
   x-glue-c0: &GC0
     image: fedora-client
@@ -286,16 +274,30 @@ x-disabledservices:
 
 
 
-
-services:
     pueued: *PUEUED
 
     guard: *GUARD
     iodined: *IODINED
     restic-rest-server: *RESTIC-REST-SERVER
-    ttyd: *TTYD
     gottyd: *GOTTYD
 
+
+  x-ttyd: &TTYD
+    tty: false
+    image: fedora-ttyd
+    build: 
+      dockerfile: fedora-ttyd.Dockerfile
+      context: ./docker
+    ports: 
+      - "18106:18106/tcp"
+    restart: always
+    working_dir: /root/
+    command: /usr/bin/ttyd -T xterm-256color -m 1 -t fontSize=30  -p 18105 -t disableLeaveAlert=true -- /bin/zsh -l
+    ports: 
+      - "28100:18105"
+
+services:
+    ttyd: *TTYD
 
 
 

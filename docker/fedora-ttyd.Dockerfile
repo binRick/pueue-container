@@ -1,4 +1,4 @@
-FROM docker.io/fedora:35 as fedora-ttyd
+FROM docker.io/fedora:35 as fedora-ttyd-build
 RUN dnf -y install cmake make gcc automake autoconf
 ADD files/ttyd-1.6.3.tar.gz /
 WORKDIR /ttyd-1.6.3
@@ -13,3 +13,9 @@ RUN cp ttyd /usr/bin/ttyd
 COPY files/t.sh /t.sh
 RUN chmod 0700 /t.sh
 ENTRYPOINT /t.sh
+
+
+
+FROM docker.io/fedora:35 as fedora-ttyd
+RUN dnf -y install zsh bash fish
+COPY --from=fedora-ttyd-build /usr/bin/ttyd /usr/bin/ttyd
