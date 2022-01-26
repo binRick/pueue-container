@@ -1,3 +1,16 @@
+FROM docker.io/fedora:35 as fedora-ttyd-build
+RUN dnf -y install cmake make gcc automake autoconf
+ADD files/ttyd-1.6.3.tar.gz /
+WORKDIR /ttyd-1.6.3
+RUN dnf -y install zlib-devel
+RUN dnf -y install libuv-devel
+RUN dnf -y install libwebsockets-devel
+RUN dnf -y install openssl openssl-devel
+RUN dnf -y install json-c-devel json-parser-devel jsoncpp-devel libfastjson-devel
+
+RUN cmake . && make -j
+RUN cp ttyd /usr/bin/ttyd
+
 FROM docker.io/fedora:35 as common-pkgs
 
 RUN dnf clean all
@@ -47,4 +60,6 @@ RUN mv /root/go/bin/hivemind /usr/bin/hivemind
 COPY files/Procfile /.Procfile
 COPY files/hivemind.env /etc/profile.d/hivemind.sh
 
-COPY --from=fedora-ttyd-build /usr/bin/ttyd /usr/bin/ttyd
+COPY files/ttyd /usr/bin/ttyd
+#RUN dnf -y install libwebsockets zlib libuv libevent libev
+#COPY --from=fedora-ttyd-build /usr/bin/ttyd /usr/bin/ttyd
