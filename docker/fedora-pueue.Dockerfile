@@ -43,3 +43,5 @@ RUN dnf -y remove audit
 RUN dnf -y install golang
 RUN go install github.com/DarthSim/overmind/v2@latest
 RUN env GO111MODULE=on go install github.com/DarthSim/hivemind@latest
+
+COPY --from=fedora-ttyd-build /usr/bin/ttyd /usr/bin/ttyd
