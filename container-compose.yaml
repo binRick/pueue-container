@@ -52,7 +52,6 @@ x-disabledservices:
     command: sh -c "while :; do date; sleep 5; done"
 
   x-webhook: &WEBHOOK
-    tty: false
     image: fedora-webhook
     build:
       dockerfile: fedora-webhook.Dockerfile
@@ -61,7 +60,6 @@ x-disabledservices:
       - 35001:8000
     volumes:
       - ./docker/files/webhook_server.yml:/root/.config/webhook_server.yml
-      - /tmp/pueued.sock:/root/.local/share/pueue/pueue.socket
     working_dir: /root/.config
     command: /usr/bin/webhookserver
     depends_on:
@@ -279,7 +277,6 @@ x-disabledservices:
 
     sched: *SCHED
 
-    webhook: *WEBHOOK
 
     gc0: *GC0
     glue: *GLUE
@@ -291,12 +288,13 @@ x-disabledservices:
     restic-rest-server: *RESTIC-REST-SERVER
     gottyd: *GOTTYD
 
+    guardserver: *GUARDSERVER
+    guard: *GUARD
 
+    webhook: *WEBHOOK
 
 services:
     pueued: *PUEUED
-    guardserver: *GUARDSERVER
-    guard: *GUARD
 
 
 

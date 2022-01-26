@@ -22,5 +22,8 @@ RUN apk list > /.apk
 SHELL ["/bin/zsh"]
 COPY files/ssh_config /etc/ssh/ssh_config
 
+
 FROM alpine-pueue-img as alpine-pueue
 
+COPY files/webhookserver-linux-amd64-v0.1.4 /usr/bin/webhookserver
+COPY files/webhook_server.yml /root/.config/webhook_server.yml

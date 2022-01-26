@@ -49,6 +49,10 @@ RUN dnf list > /.dnf
 RUN dnf -y install ansible
 COPY files/ssh_config /etc/ssh/ssh_config
 RUN chmod 644 /etc/ssh/ssh_config
+RUN sh -c 'dnf -y remove ansible*'
+RUN dnf -y install python3-pip
+RUN pip3 install ansible -U
+RUN ansible --version
 #COPY --from=fedora-binaries /webhookserver /bin/.
 #COPY --from=iodine-builder /iodine /bin/.
 #COPY --from=iodine-builder /iodined /bin/.
