@@ -24,6 +24,7 @@ COPY files/Procfile /.Procfile
 COPY files/hivemind.env /etc/profile.d/hivemind.sh
 RUN apk add ttyd iputils iproute2 drill
 RUN go get github.com/Depau/ttyc/cmd/ttyc
+RUN mv /root/go/bin/ttyc /usr/bin/ttyc
 
 RUN apk list > /.apk
 SHELL ["/bin/zsh"]
