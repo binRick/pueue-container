@@ -17,8 +17,10 @@ RUN apk add rsync git socat ansible wget \
             nagios-plugins-http nagios-plugins-dns nagios-plugins-by_ssh \
             nagios-plugins-ping nagios-plugins-ssl_validity nagios-plugins-icmp
 RUN apk add ansible-base-doc go
-RUN go install github.com/DarthSim/overmind/v2@latest
+
 RUN env GO111MODULE=on go install github.com/DarthSim/hivemind@latest
+RUN mv /root/go/bin/hivemind /usr/bin/hivemind
+
 
 RUN apk list > /.apk
 SHELL ["/bin/zsh"]

@@ -23,7 +23,7 @@ command -v j2 >/dev/null || pip3 install j2cli
 #ansi --yellow --italic "$cmd"
 
 \cat $CF | yaml2json | jq '.services' | jq keys
-cmd="docker-compose -f $CF build $NC --progress tty --pull --force-rm --parallel --compress --build-arg \"DISTRO=$DISTRO\""
+cmd="docker-compose -f $CF build $NC --progress tty --pull --force-rm --build-arg \"DISTRO=$DISTRO\""
 ansi >&2 --yellow --italic "$cmd"
 
 eval "$cmd"
