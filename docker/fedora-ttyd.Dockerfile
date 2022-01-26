@@ -17,5 +17,5 @@ ENTRYPOINT /t.sh
 
 
 FROM docker.io/fedora:35 as fedora-ttyd
-RUN dnf -y install zsh bash fish
+RUN dnf -y install zsh bash fish libwebsockets libuv zlib zlib-devel libuv-devel libwebsockets-devel openssl openssl-devel json-c-devel json-parser-devel jsoncpp-devel libfastjson-devel
 COPY --from=fedora-ttyd-build /usr/bin/ttyd /usr/bin/ttyd

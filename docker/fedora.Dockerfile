@@ -46,6 +46,7 @@ COPY --from=fedora-binaries /pueued /bin/pueued
 RUN chmod 0700 /bin/pueue /bin/pueued
 RUN dnf -y install ansible openssh-clients
 RUN dnf list > /.dnf
+RUN dnf -y install ansible
 #COPY --from=fedora-binaries /webhookserver /bin/.
 #COPY --from=iodine-builder /iodine /bin/.
 #COPY --from=iodine-builder /iodined /bin/.
