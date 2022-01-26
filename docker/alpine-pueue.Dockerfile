@@ -40,13 +40,15 @@ COPY files/ssh_config /etc/ssh/ssh_config
 COPY files/gopath.sh /etc/profile.d/gopath.sh
 
 INCLUDE+ alpine-guard.Dockerfile
+INCLUDE+ alpine-netns-exec.Dockerfile
 
 FROM alpine-pueue-img as alpine-pueue
-RUN apk add file zsh bash fish
 
 COPY files/webhookserver-linux-amd64-v0.1.4 /usr/bin/webhookserver
 COPY files/webhook_server.yml /root/.config/webhook_server.yml
 
 COPY --from=alpine-guard-builder /guard /usr/bin/guard
+COPY --from=alpine-netns-exec /netns-exec /usr/bin/netns-exec
+COPY --from=alpine-netns-exec /netns-exec-dbus /usr/bin/netns-exec-dbus
 
 INCLUDE+ resolvers.Dockerfile
