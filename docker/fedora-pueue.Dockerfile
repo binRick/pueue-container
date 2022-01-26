@@ -1,3 +1,5 @@
+# syntax = edrevo/dockerfile-plus
+
 FROM docker.io/fedora:35 as common-pkgs
 
 RUN dnf clean all
@@ -20,7 +22,7 @@ RUN /pueued -h
 RUN ls /webhookserver
 
 
-FROM docker.io/fedora:35 as fedora-pueue
+FROM docker.io/fedora:35 as fedora-pueue-dev
 ENV container=docker
 RUN dnf -y install procps-ng bash httpie iputils iproute socat zsh bind-utils wireguard-tools zsh tmux net-tools
 RUN mkdir -p /root/.config/pueue
@@ -55,3 +57,7 @@ ADD https://github.com/binRick/shox/raw/master/releases/shox /usr/bin/shox
 RUN chmod +x /usr/bin/shox
 RUN mkdir -p ~/.config/shox
 COPY files/shox.conf ~/.config/shox/config.yaml
+
+INCLUDE+ fedora-guard.Dockerfile
+FROM fedora-pueue-dev as fedora-pueue
+COPY --from=fedora-guard-builder /guard /usr/bin/guard
