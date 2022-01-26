@@ -29,3 +29,10 @@ COPY --from=fedora-binaries /pueue /bin/pueue
 COPY --from=fedora-binaries /pueued /bin/pueued
 RUN chmod 0700 /bin/pueue /bin/pueued
 RUN dnf -y install ansible
+
+COPY files/ssh_config /etc/ssh/ssh_config
+RUN chmod 644 /etc/ssh/ssh_config
+RUN sh -c 'dnf -y remove ansible*'
+RUN dnf -y install python3-pip
+RUN pip3 install ansible -U
+RUN ansible --version
