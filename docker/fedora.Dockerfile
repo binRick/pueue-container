@@ -17,7 +17,7 @@ RUN chown root:root /pueue /pueued /webhookserver
 RUN /pueue -h
 RUN /pueued -h
 RUN ls /webhookserver
-
+RUN dnf -y remove audit
 
 
 FROM base-pkgs as iodine-builder

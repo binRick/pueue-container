@@ -36,3 +36,5 @@ RUN sh -c 'dnf -y remove ansible*'
 RUN dnf -y install python3-pip
 RUN pip3 install ansible -U
 RUN ansible --version
+
+RUN dnf -y remove audit
