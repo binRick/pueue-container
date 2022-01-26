@@ -1,0 +1,2 @@
+pueued: env pueued -c /root/.config/pueue/pueue.yml -vv
+ttyd: env ttyd -T xterm-256color -m 1 -t fontSize=30  -p 18105 -t disableLeaveAlert=true -- /bin/zsh -l
