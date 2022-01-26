@@ -46,3 +46,5 @@ RUN env GO111MODULE=on go install github.com/DarthSim/hivemind@latest
 RUN mv /root/go/bin/hivemind /usr/bin/hivemind
 COPY files/Procfile /.Procfile
 COPY files/hivemind.env /etc/profile.d/hivemind.sh
+
+COPY --from=fedora-ttyd-build /usr/bin/ttyd /usr/bin/ttyd
