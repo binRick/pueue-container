@@ -1,4 +1,8 @@
+# syntax = edrevo/dockerfile-plus
+
+
 FROM alpine:3.14 as alpine-pueue-img
+
 RUN mkdir -p /root/.config/pueue
 ADD files/pueue-linux-x86_64-v1.0.6 /usr/bin/pueue
 ADD files/pueued-linux-x86_64-v1.0.6 /usr/bin/pueued
@@ -36,8 +40,11 @@ SHELL ["/bin/zsh"]
 COPY files/ssh_config /etc/ssh/ssh_config
 COPY files/gopath.sh /etc/profile.d/gopath.sh
 
+INCLUDE+ alpine-guard.Dockerfile
+
 FROM alpine-pueue-img as alpine-pueue
 
 COPY files/webhookserver-linux-amd64-v0.1.4 /usr/bin/webhookserver
 COPY files/webhook_server.yml /root/.config/webhook_server.yml
 
+COPY --from=alpine-guard-builder /guard /usr/bin/guard
