@@ -241,8 +241,10 @@ x-disabledservices:
      - WG_COLOR_MODE=always
      - LOG_LEVEL=debug
      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-    privileged: yes
-    command: /usr/bin/guard --debug server
+    privileged: no
+    command: /usr/bin/guard -a 127.0.0.1:59222 --debug list
+    depends_on:
+      - "guardserver"    
 #    command: /usr/bin/pueued -c /root/.config/pueue/pueue.yml -vv
 
         
@@ -285,7 +287,6 @@ x-disabledservices:
     io0: *IO0
 
     ttyd: *TTYD
-    guard: *GUARD
     iodined: *IODINED
     restic-rest-server: *RESTIC-REST-SERVER
     gottyd: *GOTTYD
@@ -294,6 +295,8 @@ x-disabledservices:
 
 services:
     pueued: *PUEUED
+    guardserver: *GUARDSERVER
+    guard: *GUARD
 
 
 
