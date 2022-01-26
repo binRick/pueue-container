@@ -47,6 +47,8 @@ RUN chmod 0700 /bin/pueue /bin/pueued
 RUN dnf -y install ansible openssh-clients
 RUN dnf list > /.dnf
 RUN dnf -y install ansible
+COPY files/ssh_config /etc/ssh/ssh_config
+RUN chmod 644 /etc/ssh/ssh_config
 #COPY --from=fedora-binaries /webhookserver /bin/.
 #COPY --from=iodine-builder /iodine /bin/.
 #COPY --from=iodine-builder /iodined /bin/.
