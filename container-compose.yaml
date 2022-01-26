@@ -261,6 +261,18 @@ x-disabledservices:
     working_dir: /root/.config/pueue
     command: /usr/bin/pueued -c /root/.config/pueue/pueue.yml -vv
 
+  x-wgrest: &WGREST
+    tty: false
+    image: fedora-wgrest
+    build: 
+      dockerfile: fedora-wgrest.Dockerfile
+      context: ./docker
+    restart: always
+    working_dir: /root/
+    command: wgrest --help
+    ports: 
+      - "26100:16105"
+
   x-ttyd: &TTYD
     tty: false
     image: fedora-ttyd
@@ -296,6 +308,7 @@ x-disabledservices:
 
 services:
     pueued: *PUEUED
+    wgrest: *WGREST
 
 
 
