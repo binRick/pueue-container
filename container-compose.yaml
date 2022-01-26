@@ -275,6 +275,10 @@ x-disabledservices:
 
   XXXXXXXXXXX:
 
+
+services:
+    pueued: *PUEUED
+
     sched: *SCHED
 
 
@@ -292,10 +296,6 @@ x-disabledservices:
     guard: *GUARD
 
     webhook: *WEBHOOK
-
-services:
-    pueued: *PUEUED
-
 
 
 
