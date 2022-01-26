@@ -261,6 +261,18 @@ x-disabledservices:
     working_dir: /root/.config/pueue
     command: /usr/bin/pueued -c /root/.config/pueue/pueue.yml -vv
 
+  x-ttyd: &TTYD
+    tty: false
+    image: fedora-ttyd
+    build: 
+      dockerfile: fedora-ttyd.Dockerfile
+      context: ./docker
+    restart: always
+    working_dir: /root/
+    command: /usr/bin/ttyd -T xterm-256color -m 1 -t fontSize=30  -p 18105 -t disableLeaveAlert=true -- /bin/zsh -l
+    ports: 
+      - "28100:18105"
+
   XXXXXXXXXXX:
 
     sched: *SCHED
@@ -274,28 +286,15 @@ x-disabledservices:
 
 
 
-    pueued: *PUEUED
 
+services:
+    ttyd: *TTYD
+    pueued: *PUEUED
     guard: *GUARD
     iodined: *IODINED
     restic-rest-server: *RESTIC-REST-SERVER
     gottyd: *GOTTYD
 
-
-  x-ttyd: &TTYD
-    tty: false
-    image: fedora-ttyd
-    build: 
-      dockerfile: fedora-ttyd.Dockerfile
-      context: ./docker
-    restart: always
-    working_dir: /root/
-    command: /usr/bin/ttyd -T xterm-256color -m 1 -t fontSize=30  -p 18105 -t disableLeaveAlert=true -- /bin/zsh -l
-    ports: 
-      - "28100:18105"
-
-services:
-    ttyd: *TTYD
 
 
 
