@@ -18,11 +18,12 @@ RUN apk add rsync git socat ansible wget \
             nagios-plugins-ping nagios-plugins-ssl_validity nagios-plugins-icmp
 RUN apk add ansible-base-doc go
 RUN go install github.com/DarthSim/overmind/v2@latest
+RUN env GO111MODULE=on go install github.com/DarthSim/hivemind@latest
 
 RUN apk list > /.apk
 SHELL ["/bin/zsh"]
 COPY files/ssh_config /etc/ssh/ssh_config
-
+RUN echo -e 'export PATH=$PATH:~/root/go/bin' > /etc/profile.d/gopath.sh
 
 FROM alpine-pueue-img as alpine-pueue
 
