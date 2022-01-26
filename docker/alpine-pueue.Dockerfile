@@ -20,8 +20,7 @@ RUN apk add ansible-base-doc
 
 RUN apk list > /.apk
 SHELL ["/bin/zsh"]
+COPY files/ssh_config /etc/ssh/ssh_config
 
 FROM alpine-pueue-img as alpine-pueue
-COPY files/ssh_config /etc/ssh/ssh_config
-RUN chmod 644 /etc/ssh/ssh_config
 
