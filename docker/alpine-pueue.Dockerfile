@@ -9,9 +9,14 @@ RUN chown root:root /root/.config/pueue/pueue.yml
 
 RUN apk add rsync git socat ansible wget \
             curl wireguard-tools httpie bash \
-            podman-remote docker-compose \
+            podman-remote docker-cli \
             openssh-client zsh bash sudo \
-            ripgrep vim openssh-client jq
+            ripgrep vim jq \
+            nagios-plugins-ssh nagios-plugins-tcp \
+            nagios-plugins-dig nagios-plugins-fping \
+            nagios-plugins-http nagios-plugins-dns nagios-plugins-by_ssh \
+            nagios-plugins-ping nagios-plugins-ssl_validity nagios-plugins-icmp
+RUN apk add ansible-base-doc
 
 RUN apk list > /.apk
 SHELL ["/bin/zsh"]
