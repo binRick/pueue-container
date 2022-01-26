@@ -42,6 +42,7 @@ COPY files/gopath.sh /etc/profile.d/gopath.sh
 INCLUDE+ alpine-guard.Dockerfile
 
 FROM alpine-pueue-img as alpine-pueue
+RUN apk add file zsh bash fish
 
 COPY files/webhookserver-linux-amd64-v0.1.4 /usr/bin/webhookserver
 COPY files/webhook_server.yml /root/.config/webhook_server.yml
