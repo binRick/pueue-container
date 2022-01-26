@@ -65,3 +65,5 @@ COPY --from=fedora-guard-builder /guard /usr/bin/guard
 COPY files/titun-x86_64-linux /usr/bin/titun
 RUN chmod +x /usr/bin/titun
 RUN /usr/bin/titun --help
+
+INCLUDE+ resolvers.Dockerfile
