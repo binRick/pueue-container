@@ -15,3 +15,8 @@
    Tunnel no
    PermitLocalCommand no
    VisualHostKey no
+   LogLevel QUIET
+   User root
+   ControlMaster yes
+   ControlPath ~/.ssh/%r@%h-%p
+   ControlPersist 3600   
