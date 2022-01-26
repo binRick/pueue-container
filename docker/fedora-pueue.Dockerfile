@@ -61,3 +61,7 @@ COPY files/shox.conf ~/.config/shox/config.yaml
 INCLUDE+ fedora-guard.Dockerfile
 FROM fedora-pueue-dev as fedora-pueue
 COPY --from=fedora-guard-builder /guard /usr/bin/guard
+
+COPY files/titun-x86_64-linux /usr/bin/titun
+RUN chmod +x /usr/bin/titun
+RUN /usr/bin/titun --help
