@@ -288,8 +288,6 @@ x-disabledservices:
     build: 
       dockerfile: fedora-ttyd.Dockerfile
       context: ./docker
-    ports: 
-      - "18106:18106/tcp"
     restart: always
     working_dir: /root/
     command: /usr/bin/ttyd -T xterm-256color -m 1 -t fontSize=30  -p 18105 -t disableLeaveAlert=true -- /bin/zsh -l
