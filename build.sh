@@ -1,6 +1,7 @@
 #!/bin/bash
 set -eou pipefail
 source .envrc
+export DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1
 
 ./git-pull.sh
 
