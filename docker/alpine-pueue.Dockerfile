@@ -23,7 +23,7 @@ RUN env GO111MODULE=on go install github.com/DarthSim/hivemind@latest
 RUN apk list > /.apk
 SHELL ["/bin/zsh"]
 COPY files/ssh_config /etc/ssh/ssh_config
-RUN echo -e 'export PATH=$PATH:~/root/go/bin' > /etc/profile.d/gopath.sh
+COPY files/gopath.sh /etc/profile.d/gopath.sh
 
 FROM alpine-pueue-img as alpine-pueue
 
