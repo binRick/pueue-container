@@ -25,6 +25,11 @@ COPY files/hivemind.env /etc/profile.d/hivemind.sh
 RUN apk add ttyd iputils iproute2 drill
 RUN go get github.com/Depau/ttyc/cmd/ttyc
 RUN mv /root/go/bin/ttyc /usr/bin/ttyc
+ADD https://github.com/binRick/shox/raw/master/releases/shox.musl /usr/bin/shox
+RUN chmod +x /usr/bin/shox
+
+RUN mkdir -p ~/.config/shox
+COPY files/shox.conf ~/.config/shox/config.yaml
 
 RUN apk list > /.apk
 SHELL ["/bin/zsh"]
