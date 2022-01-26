@@ -210,8 +210,10 @@ x-disabledservices:
      - WG_COLOR_MODE=always
      - LOG_LEVEL=debug
      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+     - GRPC_HOST=0.0.0.0
+     - GRPC_PORT=59222
      - LISTEN_HOST=127.0.0.1
-     - LISTEN_PORT=59222     
+     - LISTEN_PORT=59300     
     privileged: yes
     ports:
       - 59222:59222/tcp
@@ -220,6 +222,7 @@ x-disabledservices:
       - 59302:59302/udp
       - 59303:59303/udp
       - 59304:59304/udp    
+    command: guard --debug server
 
   x-guard: &GUARD
     tty: false
@@ -288,8 +291,6 @@ x-disabledservices:
   XXXXXXXXXXX:
 
 
-
-services:
     pueued: *PUEUED
 
     sched: *SCHED
@@ -305,10 +306,12 @@ services:
     restic-rest-server: *RESTIC-REST-SERVER
     gottyd: *GOTTYD
 
-    guardserver: *GUARDSERVER
-    guard: *GUARD
-
     webhook: *WEBHOOK
+
+    guard: *GUARD
+services:
+
+    guardserver: *GUARDSERVER
 
 
 
