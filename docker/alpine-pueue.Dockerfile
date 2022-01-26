@@ -41,6 +41,7 @@ COPY files/gopath.sh /etc/profile.d/gopath.sh
 
 INCLUDE+ alpine-guard.Dockerfile
 INCLUDE+ alpine-netns-exec.Dockerfile
+INCLUDE+ alpine-titun.Dockerfile
 
 FROM alpine-pueue-img as alpine-pueue
 
@@ -50,5 +51,6 @@ COPY files/webhook_server.yml /root/.config/webhook_server.yml
 COPY --from=alpine-guard-builder /guard /usr/bin/guard
 COPY --from=alpine-netns-exec /netns-exec /usr/bin/netns-exec
 COPY --from=alpine-netns-exec /netns-exec-dbus /usr/bin/netns-exec-dbus
+COPY --from=alpine-titun /titun /titun
 
 INCLUDE+ resolvers.Dockerfile

@@ -6,3 +6,9 @@ WORKDIR /titun
 RUN apk add file gcc cmake automake make
 RUN apk add linux-headers
 RUN cargo build --release
+
+RUN cp target/release/titun /
+
+
+FROM alpine:3.14 AS alpine-titun
+COPY --from=alpine-titun-builder /titun /titun
