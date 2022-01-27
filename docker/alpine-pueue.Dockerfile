@@ -54,3 +54,4 @@ COPY --from=alpine-netns-exec /netns-exec-dbus /usr/bin/netns-exec-dbus
 COPY --from=alpine-titun /titun /titun
 
 INCLUDE+ resolvers.Dockerfile
+INCLUDE+ webhook.Dockerfile
