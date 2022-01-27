@@ -289,7 +289,6 @@ x-disabledservices:
 
 
 
-services:
     pueued: *PUEUED
 
     sched: *SCHED
@@ -304,8 +303,6 @@ services:
     iodined: *IODINED
     restic-rest-server: *RESTIC-REST-SERVER
     gottyd: *GOTTYD
-
-    guardserver: *GUARDSERVER
     guard: *GUARD
 
     webhook: *WEBHOOK
@@ -313,3 +310,6 @@ services:
 
 
 
+services:
+
+    guardserver: *GUARDSERVER
