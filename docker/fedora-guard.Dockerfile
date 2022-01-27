@@ -8,4 +8,5 @@ RUN dnf -y install bash zsh wireguard-tools iptables iputils
 COPY --from=fedora-guard-builder /guard /usr/bin/guard
 RUN chmod 0700 /usr/bin/guard
 RUN mkdir -p /etc/wireguard
+RUN dnf -y install iproute
 
