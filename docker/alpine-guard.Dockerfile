@@ -6,5 +6,5 @@ FROM alpine:3.14 as alpine-guard
 RUN apk add httpie socat wireguard-tools zsh bash curl wget iptables
 COPY --from=alpine-guard-builder /guard /usr/bin/guard
 RUN chmod 0700 /usr/bin/guard
-RUN mkdir /etc/wireguard
+RUN mkdir -p /etc/wireguard
 

@@ -291,10 +291,6 @@ x-disabledservices:
   XXXXXXXXXXX:
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 99f91557cb1fb2b1f6e291d1477ea299eb1f40e8
     pueued: *PUEUED
 
     sched: *SCHED
