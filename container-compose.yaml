@@ -203,6 +203,9 @@ x-disabledservices:
       context: ./docker
     volumes:
       - /dev/net/tun:/dev/net/tun
+      - /run
+      - /sys
+      - /tmp
     working_dir: /etc/wireguard
     sysctls:
      - net.ipv4.ip_forward=1
