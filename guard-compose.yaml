@@ -1,0 +1,56 @@
+version: '3.4'
+x-vars:
+services:
+  guardserver:
+    tty: false
+    init: true
+    hostname: guardserver
+    image: docker.io/vpntechdockerhub/pueue:fedora-guardserver
+      #command: guard --debug server
+    volumes:
+    - /dev/net/tun:/dev/net/tun
+    - /run
+    - /sys
+    - /tmp      
+    working_dir: /etc/wireguard
+    sysctls:
+    - net.ipv4.ip_forward=1
+    environment:
+    - WG_COLOR_MODE=always
+    - LOG_LEVEL=debug
+    - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - GRPC_HOST=0.0.0.0
+    - GRPC_PORT=19831
+    - LISTEN_HOST=127.0.0.1
+    - LISTEN_PORT=29300
+    privileged: true
+    ports:
+    - 19831:19831/tcp
+    - 29300-29300/udp
+    - 29301:29301/udp
+    - 29302:29302/udp
+
+x-xxxxxxxxxxx:      
+    - 29303:29303/udp
+    - 29304:29304/udp
+    - 29305:29305/udp
+    - 29306:29306/udp
+    - 29307:29307/udp
+    - 29308:29308/udp
+    - 29309:29309/udp
+    - 29310:29310/udp
+    - 29311:29311/udp
+    - 29312:29312/udp
+    - 29313:29313/udp
+    - 29314:29314/udp
+    - 29315:29315/udp
+    - 29316:29316/udp
+    - 29317:29317/udp
+    - 29318:29318/udp
+    - 29319:29319/udp
+    - 29320:29320/udp
+    - 29321:29321/udp
+    - 29322:29322/udp
+    - 29323:29323/udp
+    - 29324:29324/udp
+    - 29325:29325/udp      
